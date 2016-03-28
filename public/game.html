@@ -65,8 +65,8 @@
   $('#LoginModal').modal('show');
   //listen for form click
   $( "#login" ).click(function() {
-    var email = $("#email").value();
-    var pass = $("#password").value();
+    var email = $("#email").val();
+    var pass = $("#password").val();
   var init = new client("Canvas",email,password);
 });
 
