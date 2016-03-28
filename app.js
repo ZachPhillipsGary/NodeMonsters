@@ -17,9 +17,15 @@ app.get('/', function(req, res){
 });
 //on connection, authenticate user
 io.on('connection', function(socket){
+  socket.on('login', function(socket){
+    console.log(socket);
+  });
   console.log('a user connected');
   socket.emit('map event', { "map": worldMap.printMap() });
-
+  //listen for player action
+  socket.on('action', function(msg){
+    io.emit('action', msg);
+    });
   socket.on('disconnect', function(socket){
     console.log('user disconnected',socket);
   });
