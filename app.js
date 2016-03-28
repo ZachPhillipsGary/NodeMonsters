@@ -3,6 +3,16 @@ pocketmonsters server
 */
 //begin  library includes
 var express = require('express');
+//connect to database;
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'game',
+  password : 'login101',
+  database : 'pokemon'
+});
+connection.connect();
+
 var app = express();
 var path = require('path');
 var http = require('http').Server(app);
