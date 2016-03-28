@@ -5,13 +5,6 @@
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script>
-$(document).ready(function(){
-
-    $('#LoginModal').modal('show');
-  });
-
-</script>
   </head>
   <body>
 
@@ -37,11 +30,11 @@ $(document).ready(function(){
     <div class="checkbox">
       <label><input type="checkbox"> Remember me</label>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button id="login" class="btn btn-default">Submit</button>
   </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
           </div>
         </div>
       </div>
@@ -52,7 +45,7 @@ $(document).ready(function(){
 
     <div class="row">
       <div class="col-lg-6">
-        <canvas id="myCanvas" width="700" height="700" >
+        <canvas id="Canvas" width="700" height="700" >
         Your browser does not support the HTML5 canvas tag.
         </canvas>
       </div>
@@ -60,14 +53,32 @@ $(document).ready(function(){
       </div>
     </div>
   </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/player.js"></script>
+  <script src="/js/client.js"></script>
+  <script>
+  $(document).ready(function(){
+
+      $('#LoginModal').modal({
+  backdrop: 'static',
+  keyboard: false
+  });
+  $('#LoginModal').modal('show');
+  //listen for form click
+  $( "#login" ).click(function() {
+    var email = $("$email").value();
+    var pass = $("$password").value();
+  var init = new client("Canvas",email,password);
+});
+
+
+    });
+
+  </script>
 
 
 
 
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/player.js"></script>
-<script src="/js/client.js"></script>
 
 </body>
 </html>

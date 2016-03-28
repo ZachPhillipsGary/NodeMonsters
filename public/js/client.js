@@ -30,5 +30,3 @@ function client(appIDs,username,password) {
     "parentSocketConnection": this.socket,
   });
 }
-
-var init = new client("myCanvas","abc","234");
