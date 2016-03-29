@@ -12,7 +12,6 @@ var connection = mysql.createConnection({
   database : 'pokemon'
 });
 connection.connect();
-
 var app = express();
 var path = require('path');
 var http = require('http').Server(app);

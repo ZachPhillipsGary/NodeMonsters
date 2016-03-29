@@ -43,7 +43,7 @@ function player(properties){
   }
   this.draw();
   function movePlayer(e){
-
+    console.log(e);
   }
   /*
 Keyboard event listener
