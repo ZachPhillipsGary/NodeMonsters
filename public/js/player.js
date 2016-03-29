@@ -1,10 +1,16 @@
-//Create browser compatible event listener
-function listener(elem, evnt, func, parentSocketConnection)
+//Create browser compatible event listener with parameter passing
+function listener(elem, evnt, func, parameters)
 {
-  if (elem.addEventListener)
+  elem.socketConnection = parameters[0];
+  elem.x = parameters[1];
+  elem.x = parameters[2];
+  if (elem.addEventListener) {
+
       elem.addEventListener(evnt,func,false);
-  else if (elem.attachEvent) // For IE
+    } else if (elem.attachEvent) { // For IE
+
       return elem.attachEvent("on" + evnt, func);
+    }
 }
 function player(properties){
   //define public vars
@@ -43,12 +49,28 @@ function player(properties){
   }
   this.draw();
   function movePlayer(e){
-    console.log(e);
+  switch (e.keyCode) {
+    case 38:
+      //up
+      e.target.socketConnection.socket.emit('action', {
+          "type":"move",
+          "direction":"up"
+      });
+      break;
+      case 38:
+        //up
+        break;
+    default:
+  }
+  //send action to server
+
+
+
   }
   /*
 Keyboard event listener
   */
-listener(document, 'keydown', movePlayer,this.parentSocketConnection);
+listener(document, 'keydown', movePlayer, [this.parentSocketConnection,this.x,this.y]);
 
 }
 player.prototype.draw = function () {
