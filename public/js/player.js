@@ -1,17 +1,3 @@
-//Create browser compatible event listener with parameter passing
-function listener(elem, evnt, func, parameters)
-{
-  elem.socketConnection = parameters[0];
-  elem.x = parameters[1];
-  elem.x = parameters[2];
-  if (elem.addEventListener) {
-
-      elem.addEventListener(evnt,func,false);
-    } else if (elem.attachEvent) { // For IE
-
-      return elem.attachEvent("on" + evnt, func);
-    }
-}
 function player(properties){
   //define public vars
   this.monsters = [];
@@ -70,8 +56,7 @@ function player(properties){
   /*
 Keyboard event listener
   */
-listener(document, 'keydown', movePlayer, [this.parentSocketConnection,this.x,this.y]);
-
+document.addEventListener("keydown",movePlayer);
 }
 player.prototype.draw = function () {
   var canvas = document.getElementById(String(this.canvas));
