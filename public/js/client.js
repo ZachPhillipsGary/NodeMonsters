@@ -5,7 +5,7 @@ function client(appIDs,username,password) {
   //authorize user
   this.socket.emit('login', {
     "username":username,
-    "password":password
+    "password":pwd
   });
   this.socket.on('map event', function(msg){
     //render map

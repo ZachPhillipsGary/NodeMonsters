@@ -38,7 +38,7 @@ function player(properties){
   switch (e.keyCode) {
     case 38:
       //up
-      e.target.socketConnection.socket.emit('action', {
+      socket.emit('action', {
           "type":"move",
           "direction":"up"
       });

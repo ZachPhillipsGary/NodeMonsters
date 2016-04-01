@@ -7,7 +7,7 @@
   </head>
   <body>
     <!-- Login Modal -->
-    <div class="modal fade" id="LoginModal" role="dialog">
+    <div class="modal hide fade" data-keyboard="false" data-backdrop="static" id="LoginModal" role="dialog">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
@@ -64,7 +64,7 @@ $(document).ready(function(){
   //listen for form click
   $( "#login" ).click(function() {
     var email = $("#email").val();
-    var pass = $("#password").val();
+    var pass = $("#pwd").val();
     var init = new client("Canvas",email,pass);
 });
     });
