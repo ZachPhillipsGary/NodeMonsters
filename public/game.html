@@ -6,34 +6,25 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <!-- Login Modal -->
-    <div class="modal hide fade" data-keyboard="false" data-backdrop="static" id="LoginModal" role="dialog">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
-          </div>
-          <div class="modal-body">
-
-
-    <div class="checkbox">
-      <label><input type="checkbox"> Remember me</label>
-    </div>
-    <button id="login" class="btn btn-default">Submit</button>
-          </div>
-          <div class="modal-footer">
-
-          </div>
-        </div>
-      </div>
-    </div>
-
 
   <div class="container-fluid">
 
     <div class="row">
       <div class="col-lg-4" >
+        <form role="form">
+  <div class="form-group">
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" id="email">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd">
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Remember me</label>
+  </div>
+  <button onClick="login()" class="btn btn-default">Submit</button>
+</form>
       </div>
       <div class="col-lg-4">
         <canvas id="Canvas" width="700" height="700" >
@@ -55,7 +46,7 @@ $(document).ready(function(){
     var email = $("#email").val();
     var pass = $("#pwd").val();
     var init = new client("Canvas",email,pass);
-});
+  });
     });
   </script>
 </body>
