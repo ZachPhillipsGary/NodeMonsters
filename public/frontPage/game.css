@@ -1,0 +1,48 @@
+body {
+
+	background-image: url("background.png");
+	margin:0 auto; 
+
+}
+
+div {
+	padding-top: 16px;
+	width: 400px ;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.rockM{
+	left: 55%;
+	top: 3.1%;
+	position: absolute;
+
+}
+
+
+
+.dragM{
+    animation-name: dragon;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+
+}
+
+@keyframes dragon {
+    0%   {left:-1000px; top:30px;}
+    50%  {left:0px; top:30px;}
+    100% {left:1000px; top:-300px;}
+}
+
+audio{
+	display: none;
+}
+
+
+
+
+
+
