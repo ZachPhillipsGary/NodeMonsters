@@ -62,5 +62,5 @@ player.prototype.draw = function () {
   var canvas = document.getElementById(String(this.canvas));
   var ctx = canvas.getContext("2d");
   ctx.fillStyle = String(this.color);
-  ctx.fillRect(this.x*10,this.y*10,10,10);
+  ctx.fillRect(this.x*40,this.y*40,10,10);
 }

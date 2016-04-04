@@ -18,22 +18,31 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 //begin app includes
 var game = require("game");
-var worldMap =  new game.map(70);
+var worldMap =  new game.map(50);
 var users = [];
 //define app paths
 app.get('/', function(req, res){
   res.sendfile( __dirname + '/public/game.html');
 });
+app.post('/game', function(req, res){
+  //
+  res.sendfile( __dirname + '/public/game.html');
+});
 //on connection, authenticate user
 io.on('connection', function(socket){
+  console.log(socket);
   socket.on('login', function(socket){
-    console.log(socket);
+
+
   });
   console.log('a user connected');
   socket.emit('map event', { "map": worldMap.printMap() });
   //listen for player action
   socket.on('action', function(msg){
-    io.emit('action', msg);
+  //determine type of action
+  //determine if action is valid
+  //perform action
+  socket.emit('map event', { "map": worldMap.printMap() });
     });
   socket.on('disconnect', function(socket){
     console.log('user disconnected',socket);
