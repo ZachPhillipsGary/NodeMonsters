@@ -3,29 +3,53 @@ pocketmonsters server
 */
 //begin  library includes
 var express = require('express');
-//connect to database;
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'game',
-  password : 'login101',
-  database : 'pokemon'
-});
-connection.connect();
+var passport = require('passport'), LocalStrategy = require('passport-local').Strategy;
+//initalize expressjs
 var app = express();
 var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var bcrypt = require('bcrypt');
+//connect to database;
+var mysql = require('mysql');
 //begin app includes
 var game = require("game");
 var worldMap =  new game.map(50);
 var users = [];
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    var connection = mysql.createConnection({
+      host     : 'localhost',
+      user     : 'game',
+      password : 'login101',
+      database : 'pokemon'
+    });
+    //connect to mySQL db
+    connection.connect();
+    const mySQLQuery = "SELECT * FROM authentication WHERE email = "+username;
+    connection.query(mySQLQuery,function(err,rows,fields) {
+      if(err) throw err;
+      if (rows.length === 0) {
+          return done(null, false, { message: 'Incorrect username.' });
+      }
+      //check password
+      if (rows[0].password == password) {
+        return done(null, user);
+      }
+        return done(null, false, { message: 'Incorrect password.' });
+    })
+    });
+  }
+));
 //define app paths
 app.get('/', function(req, res){
   res.sendfile( __dirname + '/public/game.html');
 });
 app.post('/game', function(req, res){
-  //
+  //authenticate request
+  passport.authenticate('local', { successRedirect: '/game',
+                                   failureRedirect: '/',
+                                   failureFlash: true });
   res.sendfile( __dirname + '/public/game.html');
 });
 //on connection, authenticate user
