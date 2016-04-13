@@ -19,7 +19,7 @@ var game = require("game");
 var worldMap =  new game.map(50);
 var users = {}; //hash table with user info
 //create MYSQL pool
-var connection = mysql.createPool({({
+var connection = mysql.createPool({
   host     : 'localhost',
   user     : 'game',
   password : 'login101',
