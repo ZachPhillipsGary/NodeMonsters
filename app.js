@@ -64,14 +64,13 @@ function User(username) {
             console.log(rows[i])
         }
        }
-      });
+     
       // And done with the connection.
     connection.release(); // end connection
     //if we reach this point, we couldn't find the user or get a password match
     return false; 
     });
   });
-}
 }
 //define app paths
 app.get('/', function(req, res){
@@ -82,10 +81,10 @@ app.post('/game', function(req, res){
   if (req.hasOwnProperty('username') && req.hasOwnProperty('password')) {
     if (authenticate(req.username,req.password)) {
         if (users.hasOwnProperty(String(req.username))) {
-                users[String(req.username)].online = true; set user to online
+                users[String(req.username)].online = true; // set user to online
         } else {
             users[String(req.username)] = new User(String(req.username)); // add user to active users list
-            users[String(req.username)].online = true; set user to online
+            users[String(req.username)].online = true; // set user to online
         }
         //render game view
         res.sendfile( __dirname + '/public/game.html');
