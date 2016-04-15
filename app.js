@@ -85,7 +85,7 @@ app.post('/game', function(req, res){
         } else {
             users[String(req.username)] = new User(String(req.username)); // add user to active users list
             users[String(req.username)].online = true; // set user to online
-        }
+        } 
         //render game view
         res.sendfile( __dirname + '/public/game.html');
       } else {
