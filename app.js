@@ -26,14 +26,14 @@ var connection = mysql.createPool({
   database : 'pokemon'
 });
 //verify connection
-pool.getConnection(function(err, connection) {
+connection.getConnection(function(err, connection) {
   if (err) {
     console.log(err);
   }
   // connected! (unless `err` is set)
 });
 function authenticate(username,password) {
-  pool.getConnection(function(err, connection) {
+  connection.getConnection(function(err, connection) {
     // Use the connection
     connection.query( 'SELECT * FROM authentication', function(err, rows) {
       //Iterate through rows (safer way than dynamically creating query string)
