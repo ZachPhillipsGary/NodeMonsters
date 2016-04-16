@@ -73,7 +73,7 @@ function User(username) {
 app.get('/', function(req, res){
   res.sendfile( __dirname + '/public/frontPage/game.html');
 });
-app.post('/game', function(req, res){
+app.get('/game', function(req, res){
   console.log(req)
   //authenticate request
   if (req.param.hasOwnProperty('username') && req.param.hasOwnProperty('password')) {
