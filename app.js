@@ -53,6 +53,7 @@ function authenticate(username,password) {
     });
   });
 }
+//user class
 function User(username) {
   this.online  = true;
   pool.getConnection(function(err, connection) {
