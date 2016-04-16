@@ -8,10 +8,6 @@ var app = express();
 var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-//include crypto library
-var bcrypt = require('bcrypt');
-// Generate a salt
-var salt = bcrypt.genSaltSync(10);
 //load mysql library
 var mysql = require('mysql');
 //begin app includes
@@ -39,11 +35,11 @@ function authenticate(username,password) {
       //Iterate through rows (safer way than dynamically creating query string)
       for (var i = 0; i < rows.length; i++) {
        if ( username === rows[i].email ) {
-          if (bcrypt.compareSync(password, rows[i].password)) {
+        // if (bcrypt.compareSync(password, rows[i].password)) {
               //username is in database and password matches
                 connection.release(); // end connection
                 return true;
-        }
+        //}
        }
       }
       // And done with the connection.
