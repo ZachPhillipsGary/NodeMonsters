@@ -73,10 +73,10 @@ function User(username) {
 app.get('/', function(req, res){
   res.sendfile( __dirname + '/public/frontPage/game.html');
 });
-app.get('/game', function(req, res){
-  console.log(req)
+app.post('/game', function(req, res){
+  console.log(req);
   //authenticate request
-  if (req.param.hasOwnProperty('username') && req.param.hasOwnProperty('password')) {
+  /*if (req.param.hasOwnProperty('username') && req.param.hasOwnProperty('password')) {
     if (authenticate(req.username,req.password)) {
         if (users.hasOwnProperty(String(req.param.username))) {
                 users[String(req.param.username)].online = true; // set user to online
@@ -89,7 +89,7 @@ app.get('/game', function(req, res){
       } else {
         res.send(401);//return error if login fails
       }
-    }
+    }*/
 });
 //on connection
 io.on('connection', function(socket){
