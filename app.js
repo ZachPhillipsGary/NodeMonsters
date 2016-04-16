@@ -74,12 +74,12 @@ app.get('/', function(req, res){
   res.sendfile( __dirname + '/public/frontPage/game.html');
 });
 app.post('/game', function(req, res){
-  console.log(req);
+  console.log(req)
   //authenticate request
-  if (req.hasOwnProperty('username') && req.hasOwnProperty('password')) {
+  if (req.param.hasOwnProperty('username') && req.param.hasOwnProperty('password')) {
     if (authenticate(req.username,req.password)) {
-        if (users.hasOwnProperty(String(req.username))) {
-                users[String(req.username)].online = true; // set user to online
+        if (users.hasOwnProperty(String(req.param.username))) {
+                users[String(req.param.username)].online = true; // set user to online
         } else {
             users[String(req.username)] = new User(String(req.username)); // add user to active users list
             users[String(req.username)].online = true; // set user to online
