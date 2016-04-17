@@ -74,6 +74,7 @@ app.get('/', function(req, res){
   res.sendfile( __dirname + '/public/frontPage/game.html');
 });
 app.post('/game', function(req, res){
+  console.log(req.body);
   const user = req.param('email');
   const password = req.param('password');
   console.log(user);
