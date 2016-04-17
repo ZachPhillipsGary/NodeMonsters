@@ -37,6 +37,8 @@ function authenticate(username,password) {
   console.log(username,password);
   connection.getConnection(function(err, connection) {
     if(err) console.log(err)
+      console.log(connection);
+    console.log('connected!');
     // perform query (or if busy place on query que)
     connection.query( 'SELECT * FROM authentication', function(err, rows) {
       if(err) console.log(err)
