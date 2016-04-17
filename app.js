@@ -75,7 +75,9 @@ app.get('/', function(req, res){
 });
 app.post('/game', function(req, res){
   const user = req.param('email');
+  const password = req.param('password');
   console.log(user);
+  res.sendfile( __dirname + '/public/game.html');
   //authenticate request
   /*if (req.param.hasOwnProperty('username') && req.param.hasOwnProperty('password')) {
     if (authenticate(req.username,req.password)) {
