@@ -81,6 +81,7 @@ function User(username) {
 }
 //define app paths
 app.get('/', function(req, res){
+  console.log(authenticate('zphillips-gary17@wooster.edu','b3f7982b5afe9dea79acd3221cc28fa1'));
   res.sendfile( __dirname + '/public/frontPage/game.html');
 });
 app.post('/game', function(req, res){
