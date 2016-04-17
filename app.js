@@ -38,6 +38,7 @@ function authenticate(username,password) {
   connection.getConnection(function(err, connection) {
     // perform query (or if busy place on query que)
     connection.query( 'SELECT * FROM authentication', function(err, rows) {
+      if(err) console.log(err)
       //Iterate through rows to find match (safer way than dynamically creating query string)
       for (var i = 0; i < rows.length; i++) {
        if ( username === rows[i].email ) {
