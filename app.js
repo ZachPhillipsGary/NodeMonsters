@@ -4,7 +4,9 @@ pocketmonsters server
 //begin  library includes
 
 //include HTTP param middleware
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+//include express middleware for GET & POST request parsing so we can access that data as a JS object 
+
 //load routing middleware
 var express = require('express');
 //initalize expressjs
@@ -32,8 +34,6 @@ connection.getConnection(function(err, connection) {
   }
   // connected! (unless `err` is set)
 });
-//include express middleware for GET & POST request parsing so we can access that data as a JS object 
-app.use(express.bodyParser());
 //define authentication middleware
 function authenticate(username,password) {
   connection.getConnection(function(err, connection) {
