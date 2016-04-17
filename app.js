@@ -14,7 +14,7 @@ var mysql = require('mysql');
 var game = require("game");
 var worldMap =  new game.map(50);
 var users = {}; //hash table with user info
-//create MYSQL pool
+//create MYSQL user pool
 var connection = mysql.createPool({
   host     : 'localhost',
   user     : 'game',
@@ -28,11 +28,14 @@ connection.getConnection(function(err, connection) {
   }
   // connected! (unless `err` is set)
 });
+//include express middleware for GET & POST request parsing so we can access that data as a JS object 
+app.use(express.bodyParser());
+//define authentication middleware
 function authenticate(username,password) {
   connection.getConnection(function(err, connection) {
-    // Use the connection
+    // perform query (or if busy place on query que)
     connection.query( 'SELECT * FROM authentication', function(err, rows) {
-      //Iterate through rows (safer way than dynamically creating query string)
+      //Iterate through rows to find match (safer way than dynamically creating query string)
       for (var i = 0; i < rows.length; i++) {
        if ( username === rows[i].email ) {
         // if (bcrypt.compareSync(password, rows[i].password)) {
@@ -74,26 +77,28 @@ app.get('/', function(req, res){
   res.sendfile( __dirname + '/public/frontPage/game.html');
 });
 app.post('/game', function(req, res){
-  console.log(req.body);
-  const user = req.param('email');
-  const password = req.param('password');
+  console.log(req);
+  const user = req.body.email;
+  const password = req.body.password;
   console.log(user);
   res.sendfile( __dirname + '/public/game.html');
   //authenticate request
-  /*if (req.param.hasOwnProperty('username') && req.param.hasOwnProperty('password')) {
-    if (authenticate(req.username,req.password)) {
-        if (users.hasOwnProperty(String(req.param.username))) {
-                users[String(req.param.username)].online = true; // set user to online
+  if (req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password')) {
+    if (authenticate(req.body.username,req.body.password)) {
+      //is the user already in the hashtable?
+        if (users.hasOwnProperty(String(req.body.username))) {
+                users[String(req.body.username)].online = true; // set user to online
         } else {
-            users[String(req.username)] = new User(String(req.username)); // add user to active users list
-            users[String(req.username)].online = true; // set user to online
+          //add user object to users hashtable 
+            users[String(req.body.username)] = new User(String(req.username)); // add user to active users list
+            users[String(req.body.username)].online = true; // set user to online
         } 
         //render game view
         res.sendfile( __dirname + '/public/game.html');
       } else {
-        res.send(401);//return error if login fails
+        res.send(401);//return access denied error if login fails
       }
-    }*/
+    }
 });
 //on connection
 io.on('connection', function(socket){
