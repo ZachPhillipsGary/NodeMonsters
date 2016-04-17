@@ -34,6 +34,7 @@ connection.getConnection(function(err, connection) {
 });
 //define authentication middleware
 function authenticate(username,password) {
+  console.log(username,password);
   connection.getConnection(function(err, connection) {
     // perform query (or if busy place on query que)
     connection.query( 'SELECT * FROM authentication', function(err, rows) {
@@ -83,11 +84,6 @@ app.get('/', function(req, res){
   res.sendfile( __dirname + '/public/frontPage/game.html');
 });
 app.post('/game', function(req, res){
-  console.log(req.body);
-  const user = req.body.email;
-  const password = req.body.password;
-  console.log(user);
-  res.sendfile( __dirname + '/public/game.html');
   //authenticate request
   if (req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password')) {
     if (authenticate(req.body.username,req.body.password)) {
