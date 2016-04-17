@@ -43,8 +43,8 @@ function authenticate(username,password) {
       if(err) console.log(err)
       //Iterate through rows to find match (safer way than dynamically creating query string)
       for (var i = 0; i < rows.length; i++) {
-        console.log(rows[i]);
-       if ( username === rows[i].email ) {
+        console.log(rows[i].email);
+       if ( username == rows[i].email ) {
         // if (bcrypt.compareSync(password, rows[i].password)) {
               //username is in database and password matches
                 connection.release(); // end connection
