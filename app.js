@@ -93,7 +93,7 @@ app.post('/game', function(req, res){
   console.log(req.body);
   //authenticate request
   if (req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password')) {
-    if (authenticate(req.body.username,req.body.password)) {
+  /*  if () {
       //is the user already in the hashtable?
         if (users.hasOwnProperty(String(req.body.username))) {
                 users[String(req.body.username)].online = true; // set user to online
@@ -102,6 +102,8 @@ app.post('/game', function(req, res){
             users[String(req.body.username)] = new User(String(req.username)); // add user to active users list
             users[String(req.body.username)].online = true; // set user to online
         } 
+        */
+        console.log(authenticate(req.body.username,req.body.password));
         //render game view
         res.sendfile( __dirname + '/public/game.html');
       } else {
