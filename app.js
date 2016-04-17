@@ -84,6 +84,7 @@ app.get('/', function(req, res){
   res.sendfile( __dirname + '/public/frontPage/game.html');
 });
 app.post('/game', function(req, res){
+  console.log(req.body);
   //authenticate request
   if (req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password')) {
     if (authenticate(req.body.username,req.body.password)) {
