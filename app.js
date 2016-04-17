@@ -5,8 +5,6 @@ pocketmonsters server
 
 //include HTTP param middleware
 var bodyParser = require('body-parser');
-//include express middleware for GET & POST request parsing so we can access that data as a JS object 
-
 //load routing middleware
 var express = require('express');
 //initalize expressjs
@@ -56,6 +54,10 @@ function authenticate(username,password) {
     });
   });
 }
+//include express middleware for GET & POST request parsing so we can access that data as a JS object 
+// parse application/x-www-form-urlencoded 
+app.use(bodyParser.urlencoded({ extended: false }))
+
 //user class
 function User(username) {
   this.online  = true;
