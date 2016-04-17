@@ -108,11 +108,12 @@ app.post('/game', function(req, res){
                 res.send(401);//return access denied error if login fails
 
         }
+           } 
          */
                 console.log(authenticate(req.body.username,req.body.password));
         //render game view
         res.sendfile( __dirname + '/public/game.html');
-      } 
+   
     }
 });
 //on connection
