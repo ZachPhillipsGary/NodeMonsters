@@ -2,14 +2,16 @@
 pocketmonsters server
 */
 //begin  library includes
+
+//include HTTP param middleware
+var bodyParser = require('body-parser')
+//load routing middleware
 var express = require('express');
 //initalize expressjs
 var app = express();
 var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-//include HTTP param middleware
-var bodyParser = require('body-parser')
 //load mysql library
 var mysql = require('mysql');
 //begin app includes
