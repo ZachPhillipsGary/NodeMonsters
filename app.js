@@ -110,7 +110,7 @@ app.post('/game', function(req, res){
         }
            } 
          */
-                console.log(authenticate(req.body.username,req.body.password));
+                console.log(authenticate(String(req.body.username),String(req.body.password));
         //render game view
         res.sendfile( __dirname + '/public/game.html');
    
