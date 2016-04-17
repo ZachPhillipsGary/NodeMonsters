@@ -37,13 +37,13 @@ function authenticate(username,password) {
   console.log(username,password);
   connection.getConnection(function(err, connection) {
     if(err) console.log(err)
-      console.log(connection);
     console.log('connected!');
     // perform query (or if busy place on query que)
     connection.query( 'SELECT * FROM authentication', function(err, rows) {
       if(err) console.log(err)
       //Iterate through rows to find match (safer way than dynamically creating query string)
       for (var i = 0; i < rows.length; i++) {
+        console.log(rows[i]);
        if ( username === rows[i].email ) {
         // if (bcrypt.compareSync(password, rows[i].password)) {
               //username is in database and password matches
