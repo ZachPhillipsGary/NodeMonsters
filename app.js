@@ -99,7 +99,7 @@ app.post('/game', function(req, res) {
     if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
         var displayGame = function(res) {
             // accepted
-            if (users.hasOwnProperty(String(req.body.email)) {
+            if (users.hasOwnProperty(String(req.body.email))) {
                 users[req.body.email].online = true; //set user to be online
             } else {
                 //initalize new user
