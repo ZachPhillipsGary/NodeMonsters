@@ -93,7 +93,7 @@ app.get('/', function(req, res){
 app.post('/game', function(req, res){
   console.log(req.body);
   //authenticate request
-  if (req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password')) {
+  if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
   /*  if () {
       //is the user already in the hashtable?
         if (users.hasOwnProperty(String(req.body.username))) {
@@ -111,7 +111,7 @@ app.post('/game', function(req, res){
         }
            } 
          */
-        console.log(authenticate(String(req.body.username),String(req.body.password)));
+        console.log(authenticate(String(req.body.email),String(req.body.password)));
         //render game view
         res.sendfile( __dirname + '/public/game.html');
    
