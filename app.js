@@ -1,8 +1,8 @@
 /*
 pocketmonsters server
 */
-//begin  library includes
-var hash = require('./lib/hash');
+//begin library includes
+
 //include HTTP param middleware
 var bodyParser = require('body-parser');
 //add twig templating system
