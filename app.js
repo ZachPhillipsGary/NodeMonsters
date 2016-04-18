@@ -32,7 +32,7 @@ connection.getConnection(function(err, connection) {
     // connected! (unless `err` is set)
 });
 //define authentication middleware
-function authenticate(res, username, password, accepted, rejected) {
+function authenticate(res, username, password, accepted) {
     var authenticated = false;
     console.log(username, password);
     connection.getConnection(function(err, connection) {
@@ -52,7 +52,9 @@ function authenticate(res, username, password, accepted, rejected) {
                     //}
                 }
             }
-            rejected(res);
+            if (authenticated  == false) {
+                res.sendStatus(401); 
+            };
             // And done with the connection.
             connection.release(); // end connection and place account back in pool
 
@@ -98,10 +100,7 @@ app.post('/game', function(req, res) {
             //render game view
             res.sendfile(__dirname + '/public/game.html');
         };
-        var rejectUser = function(res) {
-            res.sendStatus(401); //return access denied HTTP error if login fails
-        };
-        authenticate(res, req.body.email, req.body.password, displayGame, rejectUser);
+        authenticate(res, req.body.email, req.body.password, displayGame);
     }
 });
 //on connection
