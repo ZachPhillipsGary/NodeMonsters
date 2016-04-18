@@ -35,7 +35,7 @@ connection.getConnection(function(err, connection) {
 //define authentication middleware
 function authenticate(username,password) {
   console.log(username,password);
-  connection.getConnection(function(err, connection) {
+  pool.getConnection(function(err, connection) {
     if(err) console.log(err)
     console.log('connected!');
     // perform query (or if busy place on query que)
@@ -73,14 +73,12 @@ function User(username) {
       //Iterate through rows (safer way than dynamically creating query string)
       for (var i = 0; i < rows.length; i++) {
        if ( username === rows[i].name ) {
-            console.log(rows[i])
         }
        }
      
       // And done with the connection.
     connection.release(); // end connection
     //if we reach this point, we couldn't find the user or get a password match
-    return false; 
     });
   });
 }
@@ -110,7 +108,7 @@ app.post('/game', function(req, res){
         }
            } 
          */
-                console.log(authenticate(String(req.body.username),String(req.body.password)));
+        console.log(authenticate(String(req.body.username),String(req.body.password)));
         //render game view
         res.sendfile( __dirname + '/public/game.html');
    
