@@ -91,7 +91,7 @@ app.post('/game', function(req, res) {
     console.log(req.body);
     //authenticate request
     if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
-        var auth = authenticate(res,req.body.email, req.body.password, function(res) {
+        authenticate(res,req.body.email, req.body.password, function(res) {
             // accepted
             //render game view
             res.sendfile(__dirname + '/public/game.html');
