@@ -94,16 +94,11 @@ app.post('/game', function(req, res){
       // accepted
      //render game view
         res.sendfile( __dirname + '/public/game.html');
-    },function (res) {
+    }, function (res) {
               res.sendStatus(401); //return access denied HTTP error if login fails
     });
 
 }
-
-
- 
-   
-    }
 });
 //on connection
 io.on('connection', function(socket){
