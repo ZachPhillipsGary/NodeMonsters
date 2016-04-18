@@ -49,6 +49,7 @@ function authenticate(res, username, password, accepted) {
                     console.log('match')
                 //    if (bcrypt.compareSync(password, rows[i].password)) 
                         //username is in database and password matches
+                        authenticated = true;
                         accepted(res);
                     //}
                 }
