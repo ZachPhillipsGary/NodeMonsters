@@ -53,7 +53,7 @@ function authenticate(username,password) {
        }
       }
       // And done with the connection.
-    connection.release(); // end connection
+    connection.release(); // end connection and place account back in pool
 
     });
   });
