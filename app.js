@@ -43,15 +43,11 @@ function authenticate(username,password) {
       if(err) console.log(err)
       //Iterate through rows to find match (safer way than dynamically creating query string)
       for (var i = 0; i < rows.length; i++) {
-        console.log(rows[i].email);
        if ( username == rows[i].email ) {
         // if (bcrypt.compareSync(password, rows[i].password)) {
               //username is in database and password matches
                 connection.release(); // end connection
                 return true;
-              connection.on('enqueue', function () {
-  console.log('Waiting for available connection slot');
-} );
         //}
        }
       }
@@ -94,26 +90,16 @@ app.post('/game', function(req, res){
   console.log(req.body);
   //authenticate request
   if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
-  /*  if () {
-      //is the user already in the hashtable?
-        if (users.hasOwnProperty(String(req.body.username))) {
-                users[String(req.body.username)].online = true; // set user to online
-        } else {
-          //add user object to users hashtable 
-            users[String(req.body.username)] = new User(String(req.username)); // add user to active users list
-            users[String(req.body.username)].online = true; // set user to online
-        } 
-       
- 
-      } else {
-                res.send(401);//return access denied error if login fails
-
-        }
-           } 
-         */
-        console.log(authenticate(String(req.body.email),String(req.body.password)));
-        //render game view
+if (authenticate(req.body.email,req.body.password)) {
+                 //render game view
         res.sendfile( __dirname + '/public/game.html');
+} else {
+                           res.send(401);//return access denied error if login fails
+
+}
+
+
+ 
    
     }
 });
