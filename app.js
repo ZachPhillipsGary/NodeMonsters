@@ -52,7 +52,7 @@ function authenticate(res, username, password, accepted) {
                     //}
                 }
             }
-            if (authenticated  == false) {
+            if (authenticated == false) {
                 res.sendStatus(401); 
             };
             // And done with the connection.
