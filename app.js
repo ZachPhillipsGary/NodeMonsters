@@ -48,7 +48,6 @@ function authenticate(username,password) {
        if ( username == rows[i].email ) {
         // if (bcrypt.compareSync(password, rows[i].password)) {
               //username is in database and password matches
-                connection.release(); // end connection
                 authenticated =  true;
         //}
        }
