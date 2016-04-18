@@ -47,7 +47,7 @@ function authenticate(res, username, password, accepted) {
                 console.log(username, rows[i].email);
                 if (username == String(rows[i].email)) {
                     console.log('match')
-                        // if (bcrypt.compareSync(password, rows[i].password)) {
+                    if (bcrypt.compareSync(password, rows[i].password)) 
                         //username is in database and password matches
                         accepted(res);
                     //}
@@ -71,13 +71,20 @@ app.use(bodyParser.urlencoded({
 //user class
 function User(username) {
     this.online = true;
+    this.monsters = [];
+    this.location = {x:0,y:0,room:0};
     connection.getConnection(function(err, connection) {
         // Use the connection
         connection.query('SELECT * FROM trainer', function(err, rows) {
             //Iterate through rows (safer way than dynamically creating query string)
             for (var i = 0; i < rows.length; i++) {
                 if (username === rows[i].name) {
-
+                        //discovered user, get data
+                    /*   rows[i].monsters.toArray().forEach(function(element) {
+                            //add monsters
+                            this.monsters.push(element);
+                       });
+                    this.location = rows[i].location; */
                 }
             }
 
@@ -89,7 +96,6 @@ function User(username) {
 }
 //define app paths
 app.get('/', function(req, res) {
-    console.log(authenticate('zphillips-gary17@wooster.edu', 'b3f7982b5afe9dea79acd3221cc28fa1'));
     res.sendfile(__dirname + '/public/frontPage/game.html');
 });
 app.post('/game', function(req, res) {
@@ -98,6 +104,12 @@ app.post('/game', function(req, res) {
     if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
         var displayGame = function(res) {
             // accepted
+            if (users.hasOwnProperty(req.body.email)) {
+                users[req.body.email].active = true;
+            } else {
+                users[req.body.email] = new User(req.body.email);
+            }
+
             //render game view
             res.sendfile(__dirname + '/public/game.html');
         };
