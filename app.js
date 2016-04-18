@@ -90,12 +90,13 @@ app.post('/game', function(req, res){
   console.log(req.body);
   //authenticate request
   if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
-if (authenticate(req.body.email,req.body.password)) {
+    var auth = authenticate(req.body.email,req.body.password);
+if (auth === true) {
                  //render game view
         res.sendfile( __dirname + '/public/game.html');
 } else {
-                           res.send(401);//return access denied error if login fails
-
+  console.log(auth);
+  res.sendStatus(401); //return access denied HTTP error if login fails
 }
 
 
