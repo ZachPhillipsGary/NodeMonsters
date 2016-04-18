@@ -119,7 +119,7 @@ io.on('connection', function(socket) {
     socket.on('login', function(socket) {
         //verify that user has logged in
         console.log('a user connected');
-
+        console.log(socket);
     });
     //update the map
     socket.emit('map event', {

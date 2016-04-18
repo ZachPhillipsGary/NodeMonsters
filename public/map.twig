@@ -6,7 +6,6 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   </head>
   <body>
-{{ username }}
   <div class="container-fluid">
 
     <div class="row">
@@ -26,15 +25,9 @@
   <script src="/js/client.js"></script>
 <script>
 $(document).ready(function(){
-  $('#LoginModal').modal('show');
-  //listen for form click
-  $( "#login" ).click(function() {
-    var email = $("#email").val();
-    var pass = $("#pwd").val();
-    var init = new client("Canvas",email,pass);
-    $(".form-group").hide();
-  });
-    });
+
+
+var init = new client("Canvas",{{ username }});
   </script>
 </body>
 </html>

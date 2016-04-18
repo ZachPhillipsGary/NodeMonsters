@@ -1,11 +1,10 @@
-function client(appIDs,username,password) {
+function client(appIDs,username) {
   var c = document.getElementById(appIDs);
   //intialize client as public object variable
   this.socket = io();
   //authorize user
   this.socket.emit('login', {
     "username":username,
-    "password":pwd
   });
   this.socket.on('map event', function(msg){
     //render map
