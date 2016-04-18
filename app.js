@@ -35,7 +35,7 @@ connection.getConnection(function(err, connection) {
 //define authentication middleware
 function authenticate(username,password) {
   console.log(username,password);
-  pool.getConnection(function(err, connection) {
+  connection.getConnection(function(err, connection) {
     if(err) console.log(err)
     console.log('connected!');
     // perform query (or if busy place on query que)
@@ -49,6 +49,9 @@ function authenticate(username,password) {
               //username is in database and password matches
                 connection.release(); // end connection
                 return true;
+              connection.on('enqueue', function () {
+  console.log('Waiting for available connection slot');
+} );
         //}
        }
       }
@@ -67,7 +70,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //user class
 function User(username) {
   this.online  = true;
-  pool.getConnection(function(err, connection) {
+  connection.getConnection(function(err, connection) {
     // Use the connection
     connection.query( 'SELECT * FROM trainer', function(err, rows) {
       //Iterate through rows (safer way than dynamically creating query string)
