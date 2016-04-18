@@ -33,7 +33,7 @@ connection.getConnection(function(err, connection) {
   // connected! (unless `err` is set)
 });
 //define authentication middleware
-function authenticate(username,password) {
+function authenticate(username,password,action) {
   var authenticated =  false; 
   console.log(username,password);
   connection.getConnection(function(err, connection) {
@@ -49,7 +49,7 @@ function authenticate(username,password) {
         console.log('match')
         // if (bcrypt.compareSync(password, rows[i].password)) {
               //username is in database and password matches
-                authenticated =  true;
+              
         //}
        }
       }
@@ -58,7 +58,6 @@ function authenticate(username,password) {
 
     });
   });
-    return authenticated;
 }
 //include express middleware for GET & POST request parsing so we can access that data as a JS object 
 // parse application/x-www-form-urlencoded 
@@ -91,14 +90,14 @@ app.post('/game', function(req, res){
   console.log(req.body);
   //authenticate request
   if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
-    var auth = authenticate(req.body.email,req.body.password);
-    console.log(auth);
-if (auth == true) {
-                 //render game view
+    var auth = authenticate(req.body.email,req.body.password,function(res) {
+      // accepted
+     //render game view
         res.sendfile( __dirname + '/public/game.html');
-} else {
-  console.log(auth);
-  res.sendStatus(401); //return access denied HTTP error if login fails
+    },function (res) {
+              res.sendStatus(401); //return access denied HTTP error if login fails
+    });
+
 }
 
 
