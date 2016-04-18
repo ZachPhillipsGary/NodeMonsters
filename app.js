@@ -33,6 +33,7 @@ connection.getConnection(function(err, connection) {
 });
 //define authentication middleware
 function authenticate(res, username, password, accepted) {
+    console.log(res);
     var authenticated = false;
     console.log(username, password);
     connection.getConnection(function(err, connection) {
