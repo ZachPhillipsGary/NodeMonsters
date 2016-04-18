@@ -34,6 +34,7 @@ connection.getConnection(function(err, connection) {
 });
 //define authentication middleware
 function authenticate(username,password) {
+  var authenticated =  false; 
   console.log(username,password);
   connection.getConnection(function(err, connection) {
     if(err) console.log(err)
@@ -48,7 +49,7 @@ function authenticate(username,password) {
         // if (bcrypt.compareSync(password, rows[i].password)) {
               //username is in database and password matches
                 connection.release(); // end connection
-                return true;
+                authenticated =  true;
         //}
        }
       }
@@ -57,8 +58,7 @@ function authenticate(username,password) {
 
     });
   });
-      //if we reach this point, we couldn't find the user or get a password match
-    return false;
+    return authenticated;
 }
 //include express middleware for GET & POST request parsing so we can access that data as a JS object 
 // parse application/x-www-form-urlencoded 
