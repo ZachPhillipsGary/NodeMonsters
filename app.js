@@ -6,7 +6,7 @@ var hash = require('./lib/hash');
 //include HTTP param middleware
 var bodyParser = require('body-parser');
 //add twig templating system
-var twig = require("twig"),
+var twig = require("twig");
 //load routing middleware
 var express = require('express');
 //initalize expressjs
