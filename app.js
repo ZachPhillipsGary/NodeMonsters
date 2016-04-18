@@ -32,7 +32,7 @@ connection.getConnection(function(err, connection) {
     // connected! (unless `err` is set)
 });
 //define authentication middleware
-function authenticate(res,username, password, accepted,rejected) {
+function authenticate(res, username, password, accepted, rejected) {
     var authenticated = false;
     console.log(username, password);
     connection.getConnection(function(err, connection) {
@@ -73,7 +73,9 @@ function User(username) {
         connection.query('SELECT * FROM trainer', function(err, rows) {
             //Iterate through rows (safer way than dynamically creating query string)
             for (var i = 0; i < rows.length; i++) {
-                if (username === rows[i].name) {}
+                if (username === rows[i].name) {
+
+                }
             }
 
             // And done with the connection.
@@ -91,12 +93,15 @@ app.post('/game', function(req, res) {
     console.log(req.body);
     //authenticate request
     if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
-        authenticate(res,req.body.email, req.body.password, function(res) {
+        var displayGame = function(res) {
             // accepted
             //render game view
             res.sendfile(__dirname + '/public/game.html');
-        }, function(res) {
+        };
+        var rejectUser = function(res) {
             res.sendStatus(401); //return access denied HTTP error if login fails
+        }
+        authenticate(res, req.body.email, req.body.password, displayGame, rejectUser);
         });
 
     }
