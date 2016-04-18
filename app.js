@@ -47,7 +47,7 @@ function authenticate(res, username, password, accepted) {
                 console.log(username, rows[i].email);
                 if (username == String(rows[i].email)) {
                     console.log('match')
-                    if (bcrypt.compareSync(password, rows[i].password)) 
+                //    if (bcrypt.compareSync(password, rows[i].password)) 
                         //username is in database and password matches
                         accepted(res);
                     //}
@@ -80,11 +80,11 @@ function User(username) {
             for (var i = 0; i < rows.length; i++) {
                 if (username === rows[i].name) {
                         //discovered user, get data
-                    /*   rows[i].monsters.toArray().forEach(function(element) {
+                      rows[i].monsters.toArray().forEach(function(element) {
                             //add monsters
                             this.monsters.push(element);
                        });
-                    this.location = rows[i].location; */
+                    this.location = rows[i].location; 
                 }
             }
 
