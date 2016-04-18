@@ -100,10 +100,8 @@ app.post('/game', function(req, res) {
         };
         var rejectUser = function(res) {
             res.sendStatus(401); //return access denied HTTP error if login fails
-        }
+        };
         authenticate(res, req.body.email, req.body.password, displayGame, rejectUser);
-        });
-
     }
 });
 //on connection
