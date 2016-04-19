@@ -117,14 +117,25 @@ app.post('/game', function(req, res) {
 //on connection
 io.on('connection', function(socket) {
     socket.on('login', function(socket) {
-        //verify that user has logged in
-        console.log('a user connected');
-        console.log(socket);
+        if (socket.hasOwnProperty('username')) {
+                    //verify that user has logged in before connecting them
+            if (username[socket.username].online === true) {
+            //update the map and send it out to the client
+              socket.emit('map event', {
+                "map": worldMap.printMap()
+                "onlineUsers"
+             });
+             }
+        }
     });
-    //update the map
-    socket.emit('map event', {
-        "map": worldMap.printMap()
-    });
+  socket.on('message', function(msg){
+    if (msg.hasOwnProperty('username')) {
+        if (users[string(msg.username)].online) {
+             io.emit('message', msg.msg);
+        }
+    }
+   
+  });
     //listen for player action
     socket.on('action', function(msg) {
         if (msg.hasOwnProperty('type')) {
