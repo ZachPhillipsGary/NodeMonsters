@@ -117,10 +117,9 @@ app.post('/game', function(req, res) {
 //on connection
 io.on('connection', function(socket) {
     socket.on('login', function(socket) {
-        console.log(socket.username);
         if (socket.hasOwnProperty('username')) {
                     //verify that user has logged in before connecting them
-            if (username[String(socket['username'])].online === true) {
+            if (users[String(socket['username'])].online === true) {
             //update the map and send it out to the client
               io.emit('map event', {
                 "map": worldMap.printMap(),
