@@ -140,7 +140,7 @@ io.on('connection', function(socket) {
         }
     }
        //listen for player action
-    socket.on('action', function(msg) {
+    io.on('action', function(msg) {
         if (msg.hasOwnProperty('type')) {
             switch (msg.type) {
                 case "move":
@@ -154,7 +154,7 @@ io.on('connection', function(socket) {
         }
     });
     //set user active value in hashtable to offline
-    socket.on('disconnect', function(socket) {
+    io.on('disconnect', function(socket) {
         if (socket.hasOwnProperty('username')) {
             users[socket.username].online = false;
                io.emit('map event', {
