@@ -94,6 +94,9 @@ app.get('/', function(req, res) {
     res.sendfile(__dirname + '/public/frontPage/game.html');
 });
 app.post('/game', function(req, res) {
+        res.sendfile(__dirname + '/public/frontPage/game.html');
+}
+app.post('/game', function(req, res) {
     console.log(req.body);
     //authenticate request
     if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
@@ -138,7 +141,7 @@ io.on('connection', function(socket) {
    
   });
     //listen for player action
-    io.on('action', function(msg) {
+    socket.on('action', function(msg) {
         if (msg.hasOwnProperty('type')) {
             switch (msg.type) {
                 case "move":
@@ -152,7 +155,7 @@ io.on('connection', function(socket) {
         }
     });
     //set user active value in hashtable to offline
-    io.on('disconnect', function(socket) {
+    socket.on('disconnect', function(socket) {
         if (socket.hasOwnProperty('username')) {
             users[socket.username].online = false;
                io.emit('map event', {
