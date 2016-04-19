@@ -122,8 +122,8 @@ io.on('connection', function(socket) {
             if (username[socket.username].online === true) {
             //update the map and send it out to the client
               socket.emit('map event', {
-                "map": worldMap.printMap()
-                "onlineUsers"
+                "map": worldMap.printMap(),
+                "onlineUsers": users
              });
              }
         }
