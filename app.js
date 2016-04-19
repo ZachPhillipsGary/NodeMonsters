@@ -95,7 +95,7 @@ app.get('/', function(req, res) {
 });
 app.get('/game', function(req, res) {
         res.sendfile(__dirname + '/public/frontPage/game.html');
-}
+});
 app.post('/game', function(req, res) {
     console.log(req.body);
     //authenticate request
