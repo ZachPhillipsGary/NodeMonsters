@@ -125,6 +125,7 @@ io.on('connection', function(socket) {
                 "map": worldMap.printMap(),
                 "onlineUsers": users
              });
+                io.emit('message', String(socket['username'])+"has joined the game");
              }
         }
     });

@@ -3,10 +3,11 @@ function client(appIDs,chatField,username) {
   var c = document.getElementById(appIDs);
   //intialize client as private variable for class
   var socket = io();
-  //authorize user
+  //login user
   socket.emit('login', {
     "username":username,
   });
+  //get map updates
   socket.on('map event', function(msg){
     //render map
     console.log(msg);
@@ -34,6 +35,7 @@ function client(appIDs,chatField,username) {
   switch (e.keyCode) {
 
      case 38:
+     console.log("move");
       //up
       socket.emit('action', {
           "type":"move",
