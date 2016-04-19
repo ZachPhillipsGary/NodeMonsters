@@ -117,7 +117,7 @@ app.post('/game', function(req, res) {
 //on connection
 io.on('connection', function(socket) {
     socket.on('login', function(socket) {
-        console.log(socket)
+        console.log(socket.username);
         if (socket.hasOwnProperty('username')) {
                     //verify that user has logged in before connecting them
             if (username[String(socket['username'])].online === true) {
