@@ -125,11 +125,10 @@ io.on('connection', function(socket) {
                 "map": worldMap.printMap(),
                 "onlineUsers": users
              });
-                io.emit('message', String(socket['username'])+"has joined the game");
+                io.emit('message', "<code>"+String(socket['username'])+" has joined the game</code>");
              }
         }
-    });
-  io.on('message', function(msg){
+        io.on('message', function(msg){
             console.log(msg);
     if (msg.hasOwnProperty('username')) {
         if (users[string(msg.username)].online) {
@@ -166,6 +165,8 @@ io.on('connection', function(socket) {
         console.log('user disconnected', socket);
     });
 });
+    });
+  
 
 http.listen(3000, function() {
     console.log('listening on :3000');
