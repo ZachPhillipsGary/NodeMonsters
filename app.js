@@ -131,7 +131,8 @@ io.on('connection', function(socket) {
                 io.emit('message', "<code>" + String(socket['username']) + " has joined the game</code>");
             }
         }
-        io.on('message', function(msg) {
+    });
+        socket.on('message', function(msg) {
             console.log(msg);
             if (msg.hasOwnProperty('username')) {
                 if (users[string(msg.username)].online) {
@@ -153,7 +154,7 @@ io.on('connection', function(socket) {
                 }
             });
             //set user active value in hashtable to offline
-            io.on('disconnect', function(socket) {
+            socket.on('disconnect', function(socket) {
                 if (socket.hasOwnProperty('username')) {
                     users[socket.username].online = false;
                     io.emit('map event', {
@@ -166,7 +167,7 @@ io.on('connection', function(socket) {
                 console.log('user disconnected', socket);
             });
         });
-    });
+   
 
 });
 
