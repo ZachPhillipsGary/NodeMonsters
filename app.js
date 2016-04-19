@@ -117,6 +117,7 @@ app.post('/game', function(req, res) {
 //on connection
 io.on('connection', function(socket) {
     socket.on('login', function(socket) {
+        console.log(socket)
         if (socket.hasOwnProperty('username')) {
                     //verify that user has logged in before connecting them
             if (username[String(socket.username)].online === true) {
@@ -129,6 +130,7 @@ io.on('connection', function(socket) {
         }
     });
   io.on('message', function(msg){
+            console.log(msg);
     if (msg.hasOwnProperty('username')) {
         if (users[string(msg.username)].online) {
              io.emit('message', msg.msg);
