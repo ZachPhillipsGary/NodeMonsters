@@ -93,6 +93,7 @@ function User(username) {
 app.get('/', function(req, res) {
     res.sendfile(__dirname + '/public/frontPage/game.html');
 });
+//serve login page if user tries to access game view without logging in
 app.get('/game', function(req, res) {
         res.sendfile(__dirname + '/public/frontPage/game.html');
 });
@@ -138,9 +139,7 @@ io.on('connection', function(socket) {
              io.emit('message', msg.msg);
         }
     }
-   
-  });
-    //listen for player action
+       //listen for player action
     socket.on('action', function(msg) {
         if (msg.hasOwnProperty('type')) {
             switch (msg.type) {
@@ -168,6 +167,8 @@ io.on('connection', function(socket) {
         console.log('user disconnected', socket);
     });
 });
+  });
+
     });
   
 
