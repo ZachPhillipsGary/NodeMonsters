@@ -2,7 +2,6 @@
 pocketmonsters server
 */
 //begin library includes
-
 //include HTTP param middleware
 var bodyParser = require('body-parser');
 //add twig templating system
@@ -57,16 +56,16 @@ function authenticate(res, username, password, accepted) {
                 console.log(username, rows[i].email);
                 if (username == String(rows[i].email)) {
                     console.log('match')
-                //    if (bcrypt.compareSync(password, rows[i].password)) 
+                        //    if (bcrypt.compareSync(password, rows[i].password)) 
                         //username is in database and password matches
-                        authenticated = true;
-                        accepted(res);
+                    authenticated = true;
+                    accepted(res);
                     //}
                 }
             }
             if (authenticated == false) {
                 //access denied, send back HTTP error
-                res.sendStatus(401); 
+                res.sendStatus(401);
             };
             // And done with the connection.
             connection.release(); // end connection and place account back in pool
@@ -85,9 +84,9 @@ function User(username) {
     this.username = username;
     this.online = true;
     // Set user to offline if it doesn't get messed with frequently
-    setTimeout(function (parent) { 
+    setTimeout(function(parent) {
         parent.online = false;
-    }, 9999,this);
+    }, 9999, this);
 }
 //define app paths
 app.get('/', function(req, res) {
@@ -95,7 +94,7 @@ app.get('/', function(req, res) {
 });
 //serve login page if user tries to access game view without logging in
 app.get('/game', function(req, res) {
-        res.sendfile(__dirname + '/public/frontPage/game.html');
+    res.sendfile(__dirname + '/public/frontPage/game.html');
 });
 app.post('/game', function(req, res) {
     console.log(req.body);
@@ -110,10 +109,10 @@ app.post('/game', function(req, res) {
                 users[req.body.email] = new User(req.body.email);
             }
             //render game view
-              res.render(__dirname + '/public/map.twig', {
-                 username : String(req.body.email)
-                });
-       
+            res.render(__dirname + '/public/map.twig', {
+                username: String(req.body.email)
+            });
+
         };
         authenticate(res, req.body.email, req.body.password, displayGame);
     }
@@ -122,55 +121,55 @@ app.post('/game', function(req, res) {
 io.on('connection', function(socket) {
     socket.on('login', function(socket) {
         if (socket.hasOwnProperty('username')) {
-                    //verify that user has logged in before connecting them
+            //verify that user has logged in before connecting them
             if (users[String(socket['username'])].online === true) {
-            //update the map and send it out to the client
-              io.emit('map event', {
-                "map": worldMap.printMap(),
-                "onlineUsers": users
-             });
-                io.emit('message', "<code>"+String(socket['username'])+" has joined the game</code>");
-             }
-        }
-        io.on('message', function(msg){
-            console.log(msg);
-    if (msg.hasOwnProperty('username')) {
-        if (users[string(msg.username)].online) {
-             io.emit('message', msg.msg);
-        }
-    }
-       //listen for player action
-    io.on('action', function(msg) {
-        if (msg.hasOwnProperty('type')) {
-            switch (msg.type) {
-                case "move":
-                    //move player
-                    break;
-                default:
-                    socket.emit('map event', {
-                        "map": worldMap.printMap()
-                    }); //update canvas
+                //update the map and send it out to the client
+                io.emit('map event', {
+                    "map": worldMap.printMap(),
+                    "onlineUsers": users
+                });
+                io.emit('message', "<code>" + String(socket['username']) + " has joined the game</code>");
             }
         }
-    });
-    //set user active value in hashtable to offline
-    io.on('disconnect', function(socket) {
-        if (socket.hasOwnProperty('username')) {
-            users[socket.username].online = false;
-               io.emit('map event', {
-                "map": worldMap.printMap(),
-                "onlineUsers": users
-             });
-        } else {
+        io.on('message', function(msg) {
+            console.log(msg);
+            if (msg.hasOwnProperty('username')) {
+                if (users[string(msg.username)].online) {
+                    io.emit('message', msg.msg);
+                }
+            }
+            //listen for player action
+            socket.on('action', function(msg) {
+                if (msg.hasOwnProperty('type')) {
+                    switch (msg.type) {
+                        case "move":
+                            //move player
+                            break;
+                        default:
+                            socket.emit('map event', {
+                                "map": worldMap.printMap()
+                            }); //update canvas
+                    }
+                }
+            });
+            //set user active value in hashtable to offline
+            io.on('disconnect', function(socket) {
+                if (socket.hasOwnProperty('username')) {
+                    users[socket.username].online = false;
+                    io.emit('map event', {
+                        "map": worldMap.printMap(),
+                        "onlineUsers": users
+                    });
+                } else {
 
-        }
-        console.log('user disconnected', socket);
+                }
+                console.log('user disconnected', socket);
+            });
+        });
     });
+
 });
-  });
 
-    });
-  
 
 http.listen(3000, function() {
     console.log('listening on :3000');
