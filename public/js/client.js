@@ -20,6 +20,7 @@ function client(appIDs,chatField,username) {
   });
   //process chat messages
    $('form').submit(function(){
+    console.log('message')
     socket.emit('message', {"msg":$('#m').val(),"username":username});
     $('#m').val('');
     return false;
