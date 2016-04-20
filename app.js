@@ -88,22 +88,22 @@ function movePlayer(player, direction) {
             //because of closures, we must change player x and y from here instead via the map movePlayer method
             switch (direction) {
                 case "up":
-                    if (worldMap.getAbove(player.x, player.y).kind != 1) {
+                    if (worldMap.getAbove(users[player.x, users[player.y).kind != 1) {
                         users[player].y--;
                     }
                     break;
                 case "down":
-                    if (worldMap.getBelow(player.x, player.y).kind != 1) {
+                    if (worldMap.getBelow(users[player.x, users[player.y).kind != 1) {
                         users[player].y++;
                     }
                     break;
                 case "left":
-                    if (worldMap.getLeft(player.x, player.y).kind != 1) {
+                    if (worldMap.getLeft(users[player.x, users[player.y).kind != 1) {
                         users[player].x--;
                     }
                     break;
                 case "right":
-                    if (worldMap.getRight(player.x, player.y).kind != 1) {
+                    if (worldMap.getRight(users[player.x, users[player.y).kind != 1) {
                         users[player].x++;
                     }
                     break;
