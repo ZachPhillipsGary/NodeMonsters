@@ -39,27 +39,34 @@ function client(appIDs,chatField,username) {
       //up
       socket.emit('action', {
           "type":"move",
-          "direction":"up"
+          "direction":"up",
+          "username":String(appIDs)
       });
             break;
        case 40:
       //down
       socket.emit('action', {
           "type":"move",
-          "direction":"down"
+          "direction":"down",
+           "username":String(appIDs)
+
       });
            break;
       //left
       case 37:
       socket.emit('action', {
           "type":"move",
-          "direction":"left"
+          "direction":"left",
+          "username":String(appIDs)
+
       });
            break;
       case 39:
       socket.emit('action', {
           "type":"move",
-          "direction":"right"
+          "direction":"right",
+          "username":String(appIDs)
+
       });
            break;
   default:
