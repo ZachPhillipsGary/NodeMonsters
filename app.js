@@ -104,7 +104,7 @@ function movePlayer(player, direction) {
                         users[player].x++;
                     break;
             }
-            console.log(player);
+            console.log(users[player]);
         }
     }
 }
