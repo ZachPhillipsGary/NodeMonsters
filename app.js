@@ -157,7 +157,9 @@ socket.on('message', function(msg) {
                     switch (msg.type) {
                         case "move":
                             movePlayer(String(msg.username),msg.direction);
-
+                               socket.emit('map event', {
+                                "map": worldMap.printMap()
+                            }); //update canvas
                             break;
                         default:
                             socket.emit('map event', {
@@ -166,9 +168,7 @@ socket.on('message', function(msg) {
                     }
                 }
                 
-                  socket.emit('map event', {
-                                "map": worldMap.printMap()
-                            }); //update canvas
+               
             }
             });
 
