@@ -15,9 +15,13 @@ function client(appIDs,chatField,username) {
     ctx.clearRect(0, 0, c.width, c.height);
   for (var i = 0; i < msg.map.length; i++) {
     for (var l = 0; l < msg.map[i].length; l++) {
-
+    if(msg.map[i][l].objects != "__NONE__") {
       ctx.fillStyle = msg.map[i][l].color;
       ctx.fillRect(i*10,l*10,10,10);
+    } else {
+      ctx.fillStyle = msg.map[i][l].objects;
+      ctx.fillRect(i*10,l*10,10,10);
+    } 
     }
   }
   });
