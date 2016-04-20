@@ -139,6 +139,7 @@ io.on('connection', function(socket) {
 socket.on('message', function(msg) {
             console.log(msg);
             if (msg.hasOwnProperty('username')) {
+                console.log(users[String(msg.username)].online);
                 if (users[String(msg.username)].online == true) {
                     io.emit('message', String(msg.username)+":"+msg.msg);
                 }
