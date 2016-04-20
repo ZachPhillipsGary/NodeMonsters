@@ -14,7 +14,7 @@ function client(appIDs,chatField,username) {
   for (var i = 0; i < msg.map.length; i++) {
     for (var l = 0; l < msg.map[i].length; l++) {
       var ctx = c.getContext("2d");
-      ctx.fillStyle = msg.map[i][l];
+      ctx.fillStyle = msg.map[i][l].color;
       ctx.fillRect(i*10,l*10,10,10);
     }
   }
