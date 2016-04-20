@@ -79,6 +79,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 function movePlayer(player,direction) {
+    console.log(player,direction)
 if (users.hasOwnProperty(player)) {
     if (users[player].online = true) {
      worldMap.movePlayer(users[player].x,users[player].y,direction,player);
