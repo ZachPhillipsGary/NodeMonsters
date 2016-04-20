@@ -78,13 +78,38 @@ function authenticate(res, username, password, accepted) {
 app.use(bodyParser.urlencoded({
     extended: false
 }))
-function movePlayer(player,direction) {
-    console.log(player,direction)
-if (users.hasOwnProperty(player)) {
-    if (users[player].online = true) {
-     worldMap.movePlayer(users[player].x,users[player].y,direction,users[player]);
+
+function movePlayer(player, direction) {
+    console.log(player, direction)
+    if (users.hasOwnProperty(player)) {
+        if (users[player].online = true) {
+            //move player
+            worldMap.movePlayer(users[player].x, users[player].y, direction, users[player]);
+            //because of closures, we must change player x and y from here instead via the map movePlayer method
+            switch (direction) {
+                case "up":
+                    if (worldMap.getAbove(player.x, player.y).kind != 1) {
+                        users[player].y--;
+                    }
+                    break;
+                case "down":
+                    if (worldMap.getBelow(player.x, player.y).kind != 1) {
+                        users[player].y++;
+                    }
+                    break;
+                case "left":
+                    if (worldMap.getLeft(player.x, player.y).kind != 1) {
+                        users[player].x--;
+                    }
+                    break;
+                case "right":
+                    if (worldMap.getRight(player.x, player.y).kind != 1) {
+                        users[player].x++;
+                    }
+                    break;
+            }
+        }
     }
-}
 }
 //user class
 function User(username) {
@@ -92,7 +117,7 @@ function User(username) {
     this.online = true;
     this.x = Math.floor(Math.random() * 49) + 1;
     this.y = Math.floor(Math.random() * 49) + 1;
-    worldMap.setPlayer(this.x,this.y,this.username);
+    worldMap.setPlayer(this.x, this.y, this.username);
 }
 //define app paths
 app.get('/', function(req, res) {
@@ -138,55 +163,55 @@ io.on('connection', function(socket) {
             }
         }
     });
-        
 
-socket.on('message', function(msg) {
-            console.log(msg);
-            if (msg.hasOwnProperty('username')) {
-                console.log(users[String(msg.username)].online);
-                if (users[String(msg.username)].online == true) {
-                    io.emit('message', String(msg.username)+":"+msg.msg);
-                }
+
+    socket.on('message', function(msg) {
+        console.log(msg);
+        if (msg.hasOwnProperty('username')) {
+            console.log(users[String(msg.username)].online);
+            if (users[String(msg.username)].online == true) {
+                io.emit('message', String(msg.username) + ":" + msg.msg);
             }
+        }
     });
-            //listen for player action
-            socket.on('action', function(msg) {
-                console.log(msg)
-                if (users[String(msg.username)].online == true) {
-                if (msg.hasOwnProperty('type') && msg.hasOwnProperty('direction')) {
-                    switch (msg.type) {
-                        case "move":
-                            movePlayer(String(msg.username),msg.direction);
-                               socket.emit('map event', {
-                                "map": worldMap.printMap()
-                            }); //update canvas
-                            break;
-                        default:
-                            socket.emit('map event', {
-                                "map": worldMap.printMap()
-                            }); //update canvas
-                    }
+    //listen for player action
+    socket.on('action', function(msg) {
+        console.log(msg)
+        if (users[String(msg.username)].online == true) {
+            if (msg.hasOwnProperty('type') && msg.hasOwnProperty('direction')) {
+                switch (msg.type) {
+                    case "move":
+                        movePlayer(String(msg.username), msg.direction);
+                        socket.emit('map event', {
+                            "map": worldMap.printMap()
+                        }); //update canvas
+                        break;
+                    default:
+                        socket.emit('map event', {
+                            "map": worldMap.printMap()
+                        }); //update canvas
                 }
-
-               
             }
-            });
 
-        
-            //set user active value in hashtable to offline
-            socket.on('disconnect', function(socket) {
-                if (socket.hasOwnProperty('username')) {
-                    users[socket.username].online = false;
-                    io.emit('map event', {
-                        "map": worldMap.printMap(),
-                        "onlineUsers": users
-                    });
-                } else {
 
-                }
-                console.log('user disconnected', socket);
+        }
+    });
+
+
+    //set user active value in hashtable to offline
+    socket.on('disconnect', function(socket) {
+        if (socket.hasOwnProperty('username')) {
+            users[socket.username].online = false;
+            io.emit('map event', {
+                "map": worldMap.printMap(),
+                "onlineUsers": users
             });
-        });
+        } else {
+
+        }
+        console.log('user disconnected', socket);
+    });
+});
 
 
 http.listen(3000, function() {
