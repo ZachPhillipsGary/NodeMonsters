@@ -133,10 +133,8 @@ io.on('connection', function(socket) {
         }
     });
         
-   
 
-});
-io.on('message', function(msg) {
+socket.on('message', function(msg) {
             console.log(msg);
             if (msg.hasOwnProperty('username')) {
                 if (users[string(msg.username)].online) {
@@ -144,7 +142,8 @@ io.on('message', function(msg) {
                 }
             }
             //listen for player action
-            io.on('action', function(msg) {
+            socket.on('action', function(msg) {
+                console.log(msg)
                 if (msg.hasOwnProperty('type')) {
                     switch (msg.type) {
                         case "move":
@@ -157,8 +156,10 @@ io.on('message', function(msg) {
                     }
                 }
             });
+
+            });
             //set user active value in hashtable to offline
-            io.on('disconnect', function(socket) {
+            socket.on('disconnect', function(socket) {
                 if (socket.hasOwnProperty('username')) {
                     users[socket.username].online = false;
                     io.emit('map event', {
