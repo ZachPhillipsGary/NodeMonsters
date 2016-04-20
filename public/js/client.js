@@ -19,6 +19,7 @@ function client(appIDs,chatField,username) {
       ctx.fillStyle = msg.map[i][l].color;
       ctx.fillRect(i*10,l*10,10,10);
     } else {
+      console.log(i,l)
       ctx.fillStyle = msg.map[i][l].objects;
       ctx.fillRect(i*10,l*10,10,10);
     } 
