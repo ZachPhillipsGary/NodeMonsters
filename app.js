@@ -104,7 +104,7 @@ function movePlayer(player, direction) {
                     break;
             }
           for(var user in users) {
-            worldMap.updatePlayer(user);
+            worldMap.updatePlayer(users[user]);
           }
         }
     }
