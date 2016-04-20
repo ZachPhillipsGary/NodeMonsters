@@ -40,7 +40,7 @@ function client(appIDs,chatField,username) {
       socket.emit('action', {
           "type":"move",
           "direction":"up",
-          "username":String(appIDs)
+          "username":String(username)
       });
             break;
        case 40:
@@ -48,7 +48,7 @@ function client(appIDs,chatField,username) {
       socket.emit('action', {
           "type":"move",
           "direction":"down",
-           "username":String(appIDs)
+           "username":String(username)
 
       });
            break;
@@ -57,7 +57,7 @@ function client(appIDs,chatField,username) {
       socket.emit('action', {
           "type":"move",
           "direction":"left",
-          "username":String(appIDs)
+          "username":String(username)
 
       });
            break;
@@ -65,7 +65,7 @@ function client(appIDs,chatField,username) {
       socket.emit('action', {
           "type":"move",
           "direction":"right",
-          "username":String(appIDs)
+          "username":String(username)
 
       });
            break;

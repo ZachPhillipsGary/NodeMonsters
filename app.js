@@ -78,7 +78,9 @@ function authenticate(res, username, password, accepted) {
 app.use(bodyParser.urlencoded({
     extended: false
 }))
+function movePlayer(player,direction) {
 
+}
 //user class
 function User(username) {
     this.username = username;
@@ -138,16 +140,16 @@ socket.on('message', function(msg) {
             console.log(msg);
             if (msg.hasOwnProperty('username')) {
                 if (users[String(msg.username)].online == true) {
-                    io.emit('message', msg.msg);
+                    io.emit('message', String(msg.username)+":"+msg.msg);
                 }
             }
             //listen for player action
             socket.on('action', function(msg) {
-                console.log(msg)
-                if (msg.hasOwnProperty('type')) {
+                if (users[String(msg.username)].online == true) {
+                if (msg.hasOwnProperty('type') && msg.hasOwnProperty('direction')) {
                     switch (msg.type) {
                         case "move":
-                            //move player
+                            movePlayer(String(msg.username),msg.direction);
                             break;
                         default:
                             socket.emit('map event', {
@@ -155,6 +157,7 @@ socket.on('message', function(msg) {
                             }); //update canvas
                     }
                 }
+            }
             });
 
             });
