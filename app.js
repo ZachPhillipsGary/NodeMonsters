@@ -148,6 +148,7 @@ socket.on('message', function(msg) {
                     io.emit('message', String(msg.username)+":"+msg.msg);
                 }
             }
+    });
             //listen for player action
             socket.on('action', function(msg) {
                 console.log(msg)
@@ -166,7 +167,7 @@ socket.on('message', function(msg) {
             }
             });
 
-            });
+        
             //set user active value in hashtable to offline
             socket.on('disconnect', function(socket) {
                 if (socket.hasOwnProperty('username')) {
