@@ -80,15 +80,14 @@ app.use(bodyParser.urlencoded({
 }))
 
 function movePlayer(player, direction) {
-    console.log(player, direction)
+    worldMap.clearObjects()
     if (users.hasOwnProperty(player)) {
         if (users[player].online = true) {
             //move player
-            worldMap.movePlayer(users[player].x, users[player].y, direction, users[player]);
+           // worldMap.movePlayer(users[player].x, users[player].y, direction, users[player]);
             //because of closures, we must change player x and y from here instead via the map movePlayer method
             switch (direction) {
                 case "up":
-           
                         users[player].y--;
                     
                     break;
@@ -104,17 +103,29 @@ function movePlayer(player, direction) {
                         users[player].x++;
                     break;
             }
-            console.log(users[player]);
+          for(var user in users) {
+            worldMap.updatePlayer(user);
+          }
         }
     }
 }
 //user class
 function User(username) {
+    function getRandomColor() {
+     var letters = '0123456789ABCDEF'.split('');
+     var color = '#';
+     for (var i = 0; i < 6; i++ ) {
+         color += letters[Math.floor(Math.random() * 16)];
+     }
+     return color;
+   }
+    this.color = getRandomColor();
     this.username = username;
     this.online = true;
     this.x = Math.floor(Math.random() * 49) + 1;
     this.y = Math.floor(Math.random() * 49) + 1;
-    worldMap.setPlayer(this.x, this.y, this.username);
+    worldMap.updatePlayer(this);
+   // worldMap.setPlayer(this.x, this.y, this.username);
 }
 //define app paths
 app.get('/', function(req, res) {
