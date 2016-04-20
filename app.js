@@ -150,6 +150,7 @@ socket.on('message', function(msg) {
             }
             //listen for player action
             socket.on('action', function(msg) {
+                console.log(msg)
                 if (users[String(msg.username)].online == true) {
                 if (msg.hasOwnProperty('type') && msg.hasOwnProperty('direction')) {
                     switch (msg.type) {
