@@ -79,16 +79,19 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 function movePlayer(player,direction) {
-
+if (users.hasOwnProperty(player)) {
+    if (users[player].online = true) {
+     worldMap.
+    }
+}
 }
 //user class
 function User(username) {
     this.username = username;
     this.online = true;
-    // Set user to offline if it doesn't get messed with frequently
-    setTimeout(function(parent) {
-        parent.online = false;
-    }, 9999, this);
+    this.x = Math.floor(Math.random() * 49) + 1;
+    this.y = Math.floor(Math.random() * 49) + 1;
+    worldMap.setPlayer(this.x,this.y,this.username);
 }
 //define app paths
 app.get('/', function(req, res) {
