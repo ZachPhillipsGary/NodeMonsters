@@ -11,9 +11,11 @@ function client(appIDs,chatField,username) {
   socket.on('map event', function(msg){
     //render map
     console.log(msg);
+    var ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, c.width, c.height);
   for (var i = 0; i < msg.map.length; i++) {
     for (var l = 0; l < msg.map[i].length; l++) {
-      var ctx = c.getContext("2d");
+
       ctx.fillStyle = msg.map[i][l].color;
       ctx.fillRect(i*10,l*10,10,10);
     }
