@@ -81,7 +81,7 @@ app.use(bodyParser.urlencoded({
 function movePlayer(player,direction) {
 if (users.hasOwnProperty(player)) {
     if (users[player].online = true) {
-     worldMap.
+     worldMap.movePlayer(users[player].x,users[player].y,direction,player);
     }
 }
 }
