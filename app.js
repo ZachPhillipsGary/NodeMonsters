@@ -89,7 +89,6 @@ function movePlayer(player, direction) {
             switch (direction) {
                 case "up":
                 console.log(worldMap.getAbove(users[player].x, users[player].y).kind);
-                console.log(worldMap.getAbove(users[player].x, users[player].y).kind != 1);
                     if (worldMap.getAbove(users[player].x, users[player].y).kind != 1) {
                         users[player].y--;
                     }
