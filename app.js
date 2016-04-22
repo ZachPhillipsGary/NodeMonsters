@@ -56,7 +56,7 @@ function authenticate(res, username, password, accepted) {
                 console.log(username, rows[i].email);
                 if (username == String(rows[i].email)) {
                     console.log('match')
-                        //    if (bcrypt.compareSync(password, rows[i].password)) 
+                      if (bcrypt.compareSync(password, rows[i].password)) 
                         //username is in database and password matches
                     authenticated = true;
                     accepted(res);
@@ -114,7 +114,7 @@ function movePlayer(player, direction) {
     }
 }
 //user class
-function User(username) {
+function User(username,health) {
     this.direction = ""; //
     function getRandomColor() {
      var letters = '0123456789ABCDEF'.split('');
@@ -125,8 +125,9 @@ function User(username) {
      return color;
    }
     this.color = getRandomColor();
-    this.username = username;
+    this.username = username || "";
     this.online = true;
+    this.health = health || 0;
     this.x = Math.floor(Math.random() * 49) + 1;
     this.y = Math.floor(Math.random() * 49) + 1;
     worldMap.updatePlayer(this);
