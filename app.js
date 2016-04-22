@@ -88,18 +88,22 @@ function movePlayer(player, direction) {
             //because of closures, we must change player x and y from here instead via the map movePlayer method
             switch (direction) {
                 case "up":
+                        users[player].direction = "up";
                         users[player].y--;
                     
                     break;
                 case "down":
+                        users[player].direction = "down";
                         users[player].y++;
                     
                     break;
                 case "left":
+                        users[player].direction = "left";
                         users[player].x--;
                     
                     break;
                 case "right":
+                        users[player].direction = "right";
                         users[player].x++;
                     break;
             }
@@ -111,6 +115,7 @@ function movePlayer(player, direction) {
 }
 //user class
 function User(username) {
+    this.direction = ""; //
     function getRandomColor() {
      var letters = '0123456789ABCDEF'.split('');
      var color = '#';
