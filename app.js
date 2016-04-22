@@ -171,7 +171,15 @@ io.on('connection', function(socket) {
             }
         }
     });
-
+   socket.on('attack', function(msg) {
+    var playersHurt = []; //store players affected
+    //validate input
+        if (msg.hasOwnProperty('username')) {
+            if (users[String(msg.username)].online == true) {
+                users[String(msg.username)].x 
+            }
+        }
+    });
 
     socket.on('message', function(msg) {
         console.log(msg);

@@ -76,6 +76,11 @@ function client(appIDs,chatField,username) {
 
       });
            break;
+      case 32:
+      socket.emit('attack', {
+          "username": String(username)
+      });
+           break;
   default:
   }
   }
