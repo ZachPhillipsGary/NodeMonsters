@@ -114,7 +114,7 @@ function movePlayer(player, direction) {
     }
 }
 //user class
-function User(username,health) {
+function User(username,health, damage) {
     this.direction = ""; //
     function getRandomColor() {
      var letters = '0123456789ABCDEF'.split('');
@@ -128,6 +128,7 @@ function User(username,health) {
     this.username = username || "";
     this.online = true;
     this.health = health || 0;
+    this.damage = damage || 0;  //Quy added damage property 
     this.x = Math.floor(Math.random() * 49) + 1;
     this.y = Math.floor(Math.random() * 49) + 1;
     worldMap.updatePlayer(this);
@@ -241,3 +242,43 @@ http.listen(3000, function() {
 });
 //serve static content from folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+/// EXUCUTE FUNCTIONS 
+
+// This function determines the target pixel when a user fires and update health of the target player, if any 
+function attack(shooterUsername){
+    var targetX = 0;
+    var targetY = 0; 
+    switch (users[shooterUsername].direction){
+        case "up":
+            targetX = users[shooterUsername].x;
+            targetY = users[shooterUsername].y - 5;
+            break; 
+
+        case "down":
+            targetX = users[shooterUsername].x;
+            targetY = users[shooterUsername].y + 5;
+            break; 
+
+        case "left":
+            targetX = users[shooterUsername].x - 5;
+            targetY = users[shooterUsername].y;
+            break; 
+
+        case "right":
+            targetX = users[shooterUsername].x + 5;
+            targetY = users[shooterUsername].y;
+            break; 
+    } 
+
+//For now, assuming 2 players can occupy 1 pixel at once
+//When set strict rule that only 1 player can occpy a pixel at a time -- remove add break in if statement 
+    for(var user in users){
+        if (user.x == targetX && user.y == targetY){
+                user.health -= users[shooterUsername].damage; 
+        }
+
+    }
+
+}
