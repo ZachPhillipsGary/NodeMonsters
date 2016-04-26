@@ -25,12 +25,14 @@ function client(appIDs, chatField, username) {
     }
     //get map updates
     socket.on('map event', function(msg) {
+        console.log(msg)
         //render map
         mapState = msg; //cache locally map state
         renderMap(msg);
     });
     //get player updates
     socket.on('player movement', function(msg) {
+      console.log(msg)
         renderMap(mapState);
         var ctx = c.getContext("2d");
         //render map
