@@ -114,7 +114,7 @@ function movePlayer(player, direction) {
     }
 }
 //user class
-function User(username,health, damage) {
+function User(username,health, damage, uID) {
     this.direction = ""; //
     function getRandomColor() {
      var letters = '0123456789ABCDEF'.split('');
@@ -124,6 +124,7 @@ function User(username,health, damage) {
      }
      return color;
    }
+    this.uId = uID;  
     this.color = getRandomColor();
     this.username = username || "";
     this.online = true;
