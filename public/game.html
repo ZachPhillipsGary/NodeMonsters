@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+<script src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+{{ message }}
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-lg-4" >
+      </div>
+      <div class="col-lg-4">
+        <canvas id="Canvas" width="700" height="700" >
+        Your browser does not support the HTML5 canvas tag.
+        </canvas>
+      </div>
+      <div class="col-lg-4" >
+      </div>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/player.js"></script>
+  <script src="/js/client.js"></script>
+<script>
+$(document).ready(function(){
+  $('#LoginModal').modal('show');
+  //listen for form click
+  $( "#login" ).click(function() {
+    var email = $("#email").val();
+    var pass = $("#pwd").val();
+    var init = new client("Canvas",email,pass);
+    $(".form-group").hide();
+  });
+    });
+  </script>
+</body>
+</html>

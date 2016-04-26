@@ -1,7 +1,12 @@
 /*
 pocketmonsters server
 */
-//begin  library includes
+//begin library includes
+//include HTTP param middleware
+var bodyParser = require('body-parser');
+//add twig templating system
+var twig = require("twig");
+//load routing middleware
 var express = require('express');
 //initalize expressjs
 var app = express();
@@ -12,119 +17,268 @@ var io = require('socket.io')(http);
 var mysql = require('mysql');
 //begin app includes
 var game = require("game");
-var worldMap =  new game.map(50);
+var worldMap = new game.map(500);
 var users = {}; //hash table with user info
-//create MYSQL pool
+//create MYSQL user pool
 var connection = mysql.createPool({
-  host     : 'localhost',
-  user     : 'game',
-  password : 'login101',
-  database : 'pokemon'
+    host: 'localhost',
+    user: 'game',
+    password: 'login101',
+    database: 'pokemon'
 });
 //verify connection
 connection.getConnection(function(err, connection) {
-  if (err) {
-    console.log(err);
-  }
-  // connected! (unless `err` is set)
+    if (err) {
+        console.log(err);
+    }
+    // connected! (unless `err` is set)
 });
-function authenticate(username,password) {
-  connection.getConnection(function(err, connection) {
-    // Use the connection
-    connection.query( 'SELECT * FROM authentication', function(err, rows) {
-      //Iterate through rows (safer way than dynamically creating query string)
-      for (var i = 0; i < rows.length; i++) {
-       if ( username === rows[i].email ) {
-        // if (bcrypt.compareSync(password, rows[i].password)) {
-              //username is in database and password matches
-                connection.release(); // end connection
-                return true;
-        //}
-       }
-      }
-      // And done with the connection.
-    connection.release(); // end connection
-    //if we reach this point, we couldn't find the user or get a password match
-    return false;
+/*
+authenticate --authentication middleware
+@param{object} res --expressjs responce object
+@param{string} username 
+@param{string} password
+@param{function} accepted --callback for authenicated users 
+
+*/
+function authenticate(res, username, password, accepted) {
+    console.log(res);
+    var authenticated = false;
+    console.log(username, password);
+    connection.getConnection(function(err, connection) {
+        if (err) console.log(err)
+        console.log('connected!');
+        // perform query (or if busy place on query que)
+        connection.query('SELECT * FROM authentication', function(err, rows) {
+            if (err) console.log(err)
+                //Iterate through rows to find match (safer way than dynamically creating query string)
+            for (var i = 0; i < rows.length; i++) {
+                console.log(username, rows[i].email);
+                if (username == String(rows[i].email)) {
+                    console.log('match')
+                      if (bcrypt.compareSync(password, rows[i].password)) 
+                        //username is in database and password matches
+                    authenticated = true;
+                    accepted(res);
+                    //}
+                }
+            }
+            if (authenticated == false) {
+                //access denied, send back HTTP error
+                res.sendStatus(401);
+            };
+            // And done with the connection.
+            connection.release(); // end connection and place account back in pool
+
+        });
     });
-  });
+}
+//include express middleware for GET & POST request parsing so we can access that data as a JS object 
+// parse application/x-www-form-urlencoded 
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
+
+function movePlayer(player, direction) {
+    worldMap.clearObjects()
+    if (users.hasOwnProperty(player)) {
+        if (users[player].online = true) {
+            //move player
+           // worldMap.movePlayer(users[player].x, users[player].y, direction, users[player]);
+            //because of closures, we must change player x and y from here instead via the map movePlayer method
+            switch (direction) {
+                case "up":
+                        users[player].direction = "up";
+                        users[player].y--;
+                    
+                    break;
+                case "down":
+                        users[player].direction = "down";
+                        users[player].y++;
+                    
+                    break;
+                case "left":
+                        users[player].direction = "left";
+                        users[player].x--;
+                    
+                    break;
+                case "right":
+                        users[player].direction = "right";
+                        users[player].x++;
+                    break;
+            }
+          for(var user in users) {
+            worldMap.updatePlayer(users[user]);
+          }
+        }
+    }
 }
 //user class
-function User(username) {
-  this.online  = true;
-  pool.getConnection(function(err, connection) {
-    // Use the connection
-    connection.query( 'SELECT * FROM trainer', function(err, rows) {
-      //Iterate through rows (safer way than dynamically creating query string)
-      for (var i = 0; i < rows.length; i++) {
-       if ( username === rows[i].name ) {
-            console.log(rows[i])
-        }
-       }
-     
-      // And done with the connection.
-    connection.release(); // end connection
-    //if we reach this point, we couldn't find the user or get a password match
-    return false; 
-    });
-  });
+function User(username,health, damage) {
+    this.direction = ""; //
+    function getRandomColor() {
+     var letters = '0123456789ABCDEF'.split('');
+     var color = '#';
+     for (var i = 0; i < 6; i++ ) {
+         color += letters[Math.floor(Math.random() * 16)];
+     }
+     return color;
+   }
+    this.color = getRandomColor();
+    this.username = username || "";
+    this.online = true;
+    this.health = health || 0;
+    this.damage = damage || 0;  //Quy added damage property 
+    this.x = Math.floor(Math.random() * 49) + 1;
+    this.y = Math.floor(Math.random() * 49) + 1;
+    worldMap.updatePlayer(this);
+   // worldMap.setPlayer(this.x, this.y, this.username);
 }
 //define app paths
-app.get('/', function(req, res){
-  res.sendfile( __dirname + '/public/frontPage/game.html');
+app.get('/', function(req, res) {
+    res.sendfile(__dirname + '/public/frontPage/game.html');
 });
-app.get('/game', function(req, res){
-  console.log(req)
-  //authenticate request
-  if (req.param.hasOwnProperty('username') && req.param.hasOwnProperty('password')) {
-    if (authenticate(req.username,req.password)) {
-        if (users.hasOwnProperty(String(req.param.username))) {
-                users[String(req.param.username)].online = true; // set user to online
-        } else {
-            users[String(req.username)] = new User(String(req.username)); // add user to active users list
-            users[String(req.username)].online = true; // set user to online
-        } 
-        //render game view
-        res.sendfile( __dirname + '/public/game.html');
-      } else {
-        res.send(401);//return error if login fails
-      }
+//serve login page if user tries to access game view without logging in
+app.get('/game', function(req, res) {
+    res.sendfile(__dirname + '/public/frontPage/game.html');
+});
+app.post('/game', function(req, res) {
+    console.log(req.body);
+    //authenticate request
+    if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
+        var displayGame = function(res) {
+            // accepted
+            if (users.hasOwnProperty(String(req.body.email))) {
+                users[req.body.email].online = true; //set user to be online
+            } else {
+                //initalize new user
+                users[req.body.email] = new User(req.body.email);
+            }
+            //render game view
+            res.render(__dirname + '/public/map.twig', {
+                username: String(req.body.email)
+            });
+
+        };
+        authenticate(res, req.body.email, req.body.password, displayGame);
     }
 });
 //on connection
-io.on('connection', function(socket){
-  socket.on('login', function(socket){
-    //verify that user has logged in
-    console.log('a user connected');
+io.on('connection', function(socket) {
+    socket.on('login', function(socket) {
+        if (socket.hasOwnProperty('username')) {
+            //verify that user has logged in before connecting them
+            if (users[String(socket['username'])].online === true) {
+                //update the map and send it out to the client
+                io.emit('map event', {
+                    "map": worldMap.printMap(),
+                    "onlineUsers": users
+                });
+                io.emit('message', "" + String(socket['username']) + " has joined the game.");
+            }
+        }
+    });
+   socket.on('attack', function(msg) {
+    var playersHurt = []; //store players affected
+    //validate input
+        if (msg.hasOwnProperty('username')) {
+            if (users[String(msg.username)].online == true) {
+                users[String(msg.username)].x 
+            }
+        }
+    });
 
-  });
-  //update the map
-  socket.emit('map event', { "map": worldMap.printMap() });
-  //listen for player action
-  socket.on('action', function(msg){
-    if (msg.hasOwnProperty('type')) {
-    switch (msg.type) {
-      case "move":
-        //move player
-        break;
-      default:
-      socket.emit('map event', { "map": worldMap.printMap() }); //update canvas
-    }
-  }
-});
-  //set user active value in hashtable to invalid
-  socket.on('disconnect', function(socket){
-    if (socket.hasOwnProperty('username')) {
-          users[socket.username].online = false;
-    }
-    //update map
-    socket.emit('map event', { "map": worldMap.printMap() });
-    console.log('user disconnected',socket);
-  });
+    socket.on('message', function(msg) {
+        console.log(msg);
+        if (msg.hasOwnProperty('username')) {
+            console.log(users[String(msg.username)].online);
+            if (users[String(msg.username)].online == true) {
+                io.emit('message', String(msg.username) + ":" + msg.msg);
+            }
+        }
+    });
+    //listen for player action
+    socket.on('action', function(msg) {
+        console.log(msg)
+        if (users[String(msg.username)].online == true) {
+            if (msg.hasOwnProperty('type') && msg.hasOwnProperty('direction')) {
+                switch (msg.type) {
+                    case "move":
+                        movePlayer(String(msg.username), msg.direction);
+                        socket.emit('map event', {
+                            "map": worldMap.printMap()
+                        }); //update canvas
+                        break;
+                    default:
+                        socket.emit('map event', {
+                            "map": worldMap.printMap()
+                        }); //update canvas
+                }
+            }
+
+
+        }
+    });
+
+
+    //set user active value in hashtable to offline
+    socket.on('disconnect', function(socket) {
+        if (socket.hasOwnProperty('username')) {
+            users[socket.username].online = false;
+            io.emit('map event', {
+                "map": worldMap.printMap(),
+                "onlineUsers": users
+            });
+        } else {
+
+        }
+        console.log('user disconnected', socket);
+    });
 });
 
-http.listen(3000, function(){
-  console.log('listening on :3000');
+
+http.listen(3000, function() {
+    console.log('listening on :3000');
 });
 //serve static content from folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+/// EXUCUTE FUNCTIONS 
+
+// This function determines the target pixel when a user fires and update health of the target player, if any 
+function attack(shooterUsername){
+    var targetX = 0;
+    var targetY = 0; 
+    switch (users[shooterUsername].direction){
+        case "up":
+            targetX = users[shooterUsername].x;
+            targetY = users[shooterUsername].y - 5;
+            break; 
+
+        case "down":
+            targetX = users[shooterUsername].x;
+            targetY = users[shooterUsername].y + 5;
+            break; 
+
+        case "left":
+            targetX = users[shooterUsername].x - 5;
+            targetY = users[shooterUsername].y;
+            break; 
+
+        case "right":
+            targetX = users[shooterUsername].x + 5;
+            targetY = users[shooterUsername].y;
+            break; 
+    } 
+
+//For now, assuming 2 players can occupy 1 pixel at once
+//When set strict rule that only 1 player can occpy a pixel at a time -- remove add break in if statement 
+    for(var user in users){
+        if (user.x == targetX && user.y == targetY){
+                user.health -= users[shooterUsername].damage; 
+        }
+
+    }
+
+}
