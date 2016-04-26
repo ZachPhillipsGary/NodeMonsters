@@ -24,7 +24,7 @@ var connection = mysql.createPool({
     host: 'localhost',
     user: 'game',
     password: 'login101',
-    database: 'pokemon'
+    database: 'shootMonster'
 });
 //verify connection
 connection.getConnection(function(err, connection) {
@@ -49,18 +49,17 @@ function authenticate(res, username, password, accepted) {
         if (err) console.log(err)
         console.log('connected!');
         // perform query (or if busy place on query que)
-        connection.query('SELECT * FROM authentication', function(err, rows) {
+        connection.query('SELECT * FROM authentication JOIN Status ON authentication.uniqueID=Status.ID;', function(err, rows) {
             if (err) console.log(err)
                 //Iterate through rows to find match (safer way than dynamically creating query string)
             for (var i = 0; i < rows.length; i++) {
-                console.log(username, rows[i].email);
                 if (username == String(rows[i].email)) {
                     console.log('match')
-                      if (bcrypt.compareSync(password, rows[i].password)) 
-                        //username is in database and password matches
+                    //username is in database and password matches
                     authenticated = true;
-                    accepted(res);
-                    //}
+                    //pass back user data  and result object
+                    accepted(res,rows[i]);
+                    
                 }
             }
             if (authenticated == false) {
@@ -114,7 +113,7 @@ function movePlayer(player, direction) {
     }
 }
 //user class
-function User(username,health, damage, uID) {
+function User(username, health, damage, uID) {
     this.direction = ""; //
     function getRandomColor() {
      var letters = '0123456789ABCDEF'.split('');
@@ -147,17 +146,19 @@ app.post('/game', function(req, res) {
     console.log(req.body);
     //authenticate request
     if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
-        var displayGame = function(res) {
+        var displayGame = function(res,playerData) {
             // accepted
             if (users.hasOwnProperty(String(req.body.email))) {
                 users[req.body.email].online = true; //set user to be online
             } else {
                 //initalize new user
-                users[req.body.email] = new User(req.body.email);
+                users[req.body.email] = new User(playerData.email,playerData.health,playerData.damage,playerData.uniqueID);
             }
             //render game view
             res.render(__dirname + '/public/map.twig', {
-                username: String(req.body.email)
+                username: String(req.body.email),
+                health: String(playerData.health),
+                damage: String(playerData.damage)
             });
 
         };
