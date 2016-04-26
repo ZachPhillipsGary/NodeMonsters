@@ -79,10 +79,9 @@ app.use(bodyParser.urlencoded({
 }))
 
 function movePlayer(player, direction) {
-    worldMap.clearObjects()
     if (users.hasOwnProperty(player)) {
         if (users[player].online = true) {
-            //move player
+            var moved  = false; //did we move the player?
            // worldMap.movePlayer(users[player].x, users[player].y, direction, users[player]);
             //because of closures, we must change player x and y from here instead via the map movePlayer method
             switch (direction) {
@@ -111,7 +110,15 @@ function movePlayer(player, direction) {
                         }
                     break;
             }
-          
+            if (moved) {
+            //send out sucessful move notifcation
+            io.emit('player movement', {
+                "username":String(player),
+                "x":  users[player].x,
+                "y":  users[player].y,
+                "color": users[player].color
+            });
+            }
         }
     }
 }
@@ -134,7 +141,12 @@ function User(username, health, damage, uID) {
     this.damage = damage || 0;  //Quy added damage property 
     this.x = Math.floor(Math.random() * 49) + 1;
     this.y = Math.floor(Math.random() * 49) + 1;
-    worldMap.updatePlayer(this);
+    io.emit('player movement', {
+                "username":this.username,
+                "x":  this.x,
+                "y":  this.y,
+                "color": this.color
+            });
    // worldMap.setPlayer(this.x, this.y, this.username);
 }
 //define app paths
@@ -188,7 +200,7 @@ io.on('connection', function(socket) {
     //validate input
         if (msg.hasOwnProperty('username')) {
             if (users[String(msg.username)].online == true) {
-                users[String(msg.username)].x 
+                attack(msg.username);
             }
         }
     });
@@ -280,15 +292,10 @@ function attack(shooterUsername){
 //For now, assuming 2 players can occupy 1 pixel at once
 //When set strict rule that only 1 player can occpy a pixel at a time -- remove add break in if statement 
     for(var user in users){
-        if (user.x == targetX && user.y == targetY){
-                user.health -= users[shooterUsername].damage; 
+        if (users[user].x == targetX && users[user].y == targetY){
+                users[user].health -= users[shooterUsername].damage; 
         }
 
     }
 
-}
-
-function died(){
-
-    alert("You died! Please re-register to be reborn! Thank you!")
 }
