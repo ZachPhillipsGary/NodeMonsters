@@ -253,21 +253,21 @@ function attack(shooterUsername){
     switch (users[shooterUsername].direction){
         case "up":
             targetX = users[shooterUsername].x;
-            targetY = users[shooterUsername].y - 5;
+            targetY = users[shooterUsername].y - 1;
             break; 
 
         case "down":
             targetX = users[shooterUsername].x;
-            targetY = users[shooterUsername].y + 5;
+            targetY = users[shooterUsername].y + 1;
             break; 
 
         case "left":
-            targetX = users[shooterUsername].x - 5;
+            targetX = users[shooterUsername].x - 1;
             targetY = users[shooterUsername].y;
             break; 
 
         case "right":
-            targetX = users[shooterUsername].x + 5;
+            targetX = users[shooterUsername].x + 1;
             targetY = users[shooterUsername].y;
             break; 
     } 
@@ -281,4 +281,9 @@ function attack(shooterUsername){
 
     }
 
+}
+
+function died(){
+
+    alert("You died! Please re-register to be reborn! Thank you!")
 }
