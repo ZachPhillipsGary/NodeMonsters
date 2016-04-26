@@ -86,6 +86,7 @@ function movePlayer(player, direction) {
             //because of closures, we must change player x and y from here instead via the map movePlayer method
             switch (direction) {
                 case "up":
+                console.log(worldMap.getAbove(users[player].x,users[player].y));
                 if ( worldMap.getAbove(users[player].x,users[player].y).kind != 1 ) {
                         users[player].direction = "up";
                         users[player].y--;
