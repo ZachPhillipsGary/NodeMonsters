@@ -266,6 +266,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // This function determines the target pixel when a user fires and update health of the target player, if any 
 function attack(shooterUsername){
+    console.log(users[shooterUsername].direction)
     var targetX = 0;
     var targetY = 0; 
     switch (users[shooterUsername].direction){
