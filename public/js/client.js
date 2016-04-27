@@ -46,7 +46,7 @@ function client(appIDs, chatField, username) {
     });
     //get player updates
     socket.on('player movement', function(msg) {
-      mapState.["onlineUsers"][String(msg.username)] = msg;
+      mapState["onlineUsers"][String(msg.username)] = msg;
       console.log('player movement',msg);
       if (mapState.hasOwnProperty('map')) {
               renderMap(mapState);
