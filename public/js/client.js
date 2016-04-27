@@ -23,6 +23,20 @@ function client(appIDs, chatField, username) {
         }
 
     }
+   /*
+    renderPlayers() -- populates the canvas with floor and wall tiles
+    @param{object} data from map event messages
+    */
+    function renderPlayers(mapObject) {
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, c.width, c.height); //clear map
+        for (player in mapState.players) {
+                   var ctx = c.getContext("2d");
+                   // var img = document.getElementById(msg.direction);
+                  //  ctx.drawImage(img,25*msg.x,25*msg.y);
+                    ctx.fillStyle = mapState.players[player].color;
+                    ctx.fillRect(mapState.players[player].x * 25, mapState.players[player].y * 25, 25, 25);
+    }
     //get map updates
     socket.on('map event', function(msg) {
         //render map
@@ -31,16 +45,13 @@ function client(appIDs, chatField, username) {
     });
     //get player updates
     socket.on('player movement', function(msg) {
-      mapState[String(msg.username)] = msg;
+      mapState.players[String(msg.username)] = msg;
       console.log('player movement',msg);
       if (mapState.hasOwnProperty('map')) {
               renderMap(mapState);
+              renderPlayers(mapState);
       } 
-                    var ctx = c.getContext("2d");
-                   // var img = document.getElementById(msg.direction);
-                  //  ctx.drawImage(img,25*msg.x,25*msg.y);
-                    ctx.fillStyle = msg.color;
-                    ctx.fillRect(msg.x * 25, msg.y * 25, 25, 25);
+
     });
     socket.on('died', function(msg) {
     if(msg.player === username) 
