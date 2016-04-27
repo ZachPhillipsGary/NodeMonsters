@@ -17,7 +17,7 @@ var io = require('socket.io')(http);
 var mysql = require('mysql');
 //begin app includes
 var game = require("game");
-var worldMap = new game.map(50);
+var worldMap = new game.map(25);
 var users = {}; //hash table with user info
 //create MYSQL user pool
 var connection = mysql.createPool({
