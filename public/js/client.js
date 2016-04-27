@@ -29,7 +29,6 @@ function client(appIDs, chatField, username) {
     */
     function renderPlayers(mapObject) {
         var ctx = c.getContext("2d");
-        ctx.clearRect(0, 0, c.width, c.height); //clear map
         for (player in mapState["onlineUsers"]) {
                    var ctx = c.getContext("2d");
                    // var img = document.getElementById(msg.direction);
