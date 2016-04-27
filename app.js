@@ -143,8 +143,8 @@ function User(username, health, damage, uID) {
     this.online = true;
     this.health = health || 0;
     this.damage = damage || 0;  //Quy added damage property 
-    this.x = Math.floor(Math.random() * 49) + 1;
-    this.y = Math.floor(Math.random() * 49) + 1;
+    this.x = Math.floor(Math.random() * 25) + 1;
+    this.y = Math.floor(Math.random() * 25) + 1;
     //place user on map
 }
 //define app paths
