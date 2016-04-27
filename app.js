@@ -86,25 +86,25 @@ function movePlayer(player, direction) {
             //because of closures, we must change player x and y from here instead via the map movePlayer method
             switch (direction) {
                 case "up":
-              if ( worldMap.getTile(users[player].x,users[player].y-1).kind == 0 ) {
+              if ( worldMap.getTile(users[player].x,users[player].y-1).kind == 1 ) {
                         users[player].direction = "up";
                         users[player].y--;
                     }
                     break;
                 case "down":
-                if ( worldMap.getTile(users[player].x,users[player].y+1).kind == 0 ) {
+                if ( worldMap.getTile(users[player].x,users[player].y+1).kind == 1 ) {
                         users[player].direction = "down";
                         users[player].y++;
                      }
                     break;
                 case "left":
-                if ( worldMap.getTile(users[player].x-1,users[player].y).kind == 0 ) {
+                if ( worldMap.getTile(users[player].x-1,users[player].y).kind == 1 ) {
                         users[player].direction = "left";
                         users[player].x--;
                       }  
                     break;
                 case "right":
-              if ( worldMap.getTile(users[player].x+1,users[player].y).kind == 0 ) {
+              if ( worldMap.getTile(users[player].x+1,users[player].y).kind == 1 ) {
                         users[player].direction = "right";
                         users[player].x++;
                      }
