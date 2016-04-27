@@ -32,7 +32,7 @@ function client(appIDs, chatField, username) {
         if (msg.hasOwnProperty('onlineUsers')) {
           for (var p in msg.onlineUsers) {
                     var ctx = c.getContext("2d");
-                    ctx.fillStyle = msg.onlineUsers[p]color;
+                    ctx.fillStyle = msg.onlineUsers[p].color;
                     ctx.fillRect(msg.onlineUsers[p].x * 10, msg.onlineUsers[p].y * 10, 10, 10);
           }
         }
