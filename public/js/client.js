@@ -31,16 +31,13 @@ function client(appIDs, chatField, username) {
     });
     //get player updates
     socket.on('player movement', function(msg) {
+      mapState[String(msg.username)] = msg;
       console.log('player movement',msg);
       if (mapState.hasOwnProperty('map')) {
               renderMap(mapState);
-      }
-        var ctx = c.getContext("2d");
-        //render map
-       if (msg.hasOwnProperty('username')) {
+      } 
                     ctx.fillStyle = msg.color;
                     ctx.fillRect(msg.x * 10, msg.y * 10, 10, 10);
-       }
     });
     socket.on('died', function(msg) {
     if(msg.player === username) 

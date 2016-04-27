@@ -87,28 +87,28 @@ function movePlayer(player, direction) {
             switch (direction) {
                 case "up":
                 console.log(worldMap.getAbove(users[player].x,users[player].y).kind != 1);
-                if ( worldMap.getAbove(users[player].x,users[player].y).kind != 1 ) {
+              //  if ( worldMap.getAbove(users[player].x,users[player].y).kind == 0 ) {
                         users[player].direction = "up";
                         users[player].y--;
-                         }
+               //          }
                     break;
                 case "down":
-                if ( worldMap.getBelow(users[player].x,users[player].y).kind != 1 ) {
+             //   if ( worldMap.getBelow(users[player].x,users[player].y).kind == 0 ) {
                         users[player].direction = "down";
                         users[player].y++;
-                        }
+                //        }
                     break;
                 case "left":
-                if ( worldMap.getLeft(users[player].x,users[player].y).kind != 1 ) {
+             //   if ( worldMap.getLeft(users[player].x,users[player].y).kind == 0 ) {
                         users[player].direction = "left";
                         users[player].x--;
-                        }  
+                 //       }  
                     break;
                 case "right":
-                if ( worldMap.getRight(users[player].x,users[player].y).kind != 1 ) {
+            //    if ( worldMap.getRight(users[player].x,users[player].y).kind == 0 ) {
                         users[player].direction = "right";
                         users[player].x++;
-                        }
+                 //       }
                     break;
             }
                             console.log(users[player]);
