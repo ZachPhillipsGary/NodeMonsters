@@ -87,6 +87,7 @@ function movePlayer(player, direction) {
             switch (direction) {
                 case "up":
               if ( worldMap.getTile(users[player].x,users[player].y-1).kind == 1 ) {
+                console.log(worldMap.getTile(users[player].x,users[player].y-1).kind );
                         users[player].direction = "up";
                         users[player].y--;
                     }
