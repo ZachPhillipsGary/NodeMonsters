@@ -30,12 +30,12 @@ function client(appIDs, chatField, username) {
     function renderPlayers(mapObject) {
         var ctx = c.getContext("2d");
         ctx.clearRect(0, 0, c.width, c.height); //clear map
-        for (player in mapState.players) {
+        for (player in mapState["onlineUsers"]) {
                    var ctx = c.getContext("2d");
                    // var img = document.getElementById(msg.direction);
                   //  ctx.drawImage(img,25*msg.x,25*msg.y);
-                    ctx.fillStyle = mapState.players[player].color;
-                    ctx.fillRect(mapState.players[player].x * 25, mapState.players[player].y * 25, 25, 25);
+                    ctx.fillStyle = mapState[ "onlineUsers"][player].color;
+                    ctx.fillRect(mapState[ "onlineUsers"][player].x * 25, mapState[ "onlineUsers"][player].y * 25, 25, 25);
         }
     }
     //get map updates
@@ -46,7 +46,7 @@ function client(appIDs, chatField, username) {
     });
     //get player updates
     socket.on('player movement', function(msg) {
-      mapState.players[String(msg.username)] = msg;
+      mapState.["onlineUsers"][String(msg.username)] = msg;
       console.log('player movement',msg);
       if (mapState.hasOwnProperty('map')) {
               renderMap(mapState);
