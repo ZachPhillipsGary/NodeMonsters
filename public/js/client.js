@@ -29,6 +29,13 @@ function client(appIDs, chatField, username) {
         //render map
         mapState = msg; //cache locally map state
         renderMap(msg);
+        if (msg.hasOwnProperty('onlineUsers')) {
+          for (var p in msg.onlineUsers) {
+                    var ctx = c.getContext("2d");
+                    ctx.fillStyle = msg.onlineUsers[p]color;
+                    ctx.fillRect(msg.onlineUsers[p].x * 10, msg.onlineUsers[p].y * 10, 10, 10);
+          }
+        }
     });
     //get player updates
     socket.on('player movement', function(msg) {

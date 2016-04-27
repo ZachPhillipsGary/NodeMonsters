@@ -145,13 +145,13 @@ function User(username, health, damage, uID) {
     this.damage = damage || 0;  //Quy added damage property 
     this.x = Math.floor(Math.random() * 49) + 1;
     this.y = Math.floor(Math.random() * 49) + 1;
+    //place user on map
     io.emit('player movement', {
                 "username":this.username,
                 "x":  this.x,
                 "y":  this.y,
                 "color": this.color
             });
-   // worldMap.setPlayer(this.x, this.y, this.username);
 }
 //define app paths
 app.get('/', function(req, res) {
