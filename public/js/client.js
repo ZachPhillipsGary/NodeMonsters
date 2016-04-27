@@ -36,6 +36,7 @@ function client(appIDs, chatField, username) {
                   //  ctx.drawImage(img,25*msg.x,25*msg.y);
                     ctx.fillStyle = mapState.players[player].color;
                     ctx.fillRect(mapState.players[player].x * 25, mapState.players[player].y * 25, 25, 25);
+        }
     }
     //get map updates
     socket.on('map event', function(msg) {
