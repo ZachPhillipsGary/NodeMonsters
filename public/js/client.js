@@ -54,7 +54,7 @@ function client(appIDs, chatField, username) {
 
     });
     socket.on('died', function(msg) {
-    if(msg.player === username) 
+    if(msg['username'] === username) 
           document.write("You died! Please re-register to be reborn! Thank you!")
 
     });
