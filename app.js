@@ -17,7 +17,7 @@ var io = require('socket.io')(http);
 var mysql = require('mysql');
 //begin app includes
 var game = require("game");
-var worldMap = new game.map(50);
+var worldMap = new game.map(25);
 var users = {}; //hash table with user info
 //create MYSQL user pool
 var connection = mysql.createPool({
@@ -86,29 +86,29 @@ function movePlayer(player, direction) {
             //because of closures, we must change player x and y from here instead via the map movePlayer method
             switch (direction) {
                 case "up":
-                console.log(worldMap.getAbove(users[player].x,users[player].y).kind != 1);
-              //  if ( worldMap.getAbove(users[player].x,users[player].y).kind == 0 ) {
+              if ( worldMap.getTile(users[player].x,users[player].y-1).kind == 1 ) {
+                console.log(worldMap.getTile(users[player].x,users[player].y-1).kind );
                         users[player].direction = "up";
                         users[player].y--;
-               //          }
+                    }
                     break;
                 case "down":
-             //   if ( worldMap.getBelow(users[player].x,users[player].y).kind == 0 ) {
+                if ( worldMap.getTile(users[player].x,users[player].y+1).kind == 1 ) {
                         users[player].direction = "down";
                         users[player].y++;
-                //        }
+                     }
                     break;
                 case "left":
-             //   if ( worldMap.getLeft(users[player].x,users[player].y).kind == 0 ) {
+                if ( worldMap.getTile(users[player].x-1,users[player].y).kind == 1 ) {
                         users[player].direction = "left";
                         users[player].x--;
-                 //       }  
+                      }  
                     break;
                 case "right":
-            //    if ( worldMap.getRight(users[player].x,users[player].y).kind == 0 ) {
+              if ( worldMap.getTile(users[player].x+1,users[player].y).kind == 1 ) {
                         users[player].direction = "right";
                         users[player].x++;
-                 //       }
+                     }
                     break;
             }
                             console.log(users[player]);
@@ -117,6 +117,7 @@ function movePlayer(player, direction) {
             if (moved) {
             //send out sucessful move notifcation
             io.emit('player movement', {
+                "direction":String(direction),
                 "username":String(player),
                 "x":  users[player].x,
                 "y":  users[player].y,
@@ -143,8 +144,8 @@ function User(username, health, damage, uID) {
     this.online = true;
     this.health = health || 0;
     this.damage = damage || 0;  //Quy added damage property 
-    this.x = Math.floor(Math.random() * 49) + 1;
-    this.y = Math.floor(Math.random() * 49) + 1;
+    this.x = Math.floor(Math.random() * 24) + 1;
+    this.y = Math.floor(Math.random() * 24) + 1;
     //place user on map
 }
 //define app paths
@@ -265,6 +266,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // This function determines the target pixel when a user fires and update health of the target player, if any 
 function attack(shooterUsername){
+    console.log(users[shooterUsername].direction)
     var targetX = 0;
     var targetY = 0; 
     switch (users[shooterUsername].direction){
@@ -294,7 +296,21 @@ function attack(shooterUsername){
     for(var user in users){
         if (users[user].x == targetX && users[user].y == targetY){
                 users[user].health -= users[shooterUsername].damage; 
+                if(users[user].health < 0) {
+                io.emit('died', {
+                "username":String(user),
+                "health": users[user].health
+            });
+                } else {
+            io.emit('player attacked', {
+                "username":String(shooterUsername),
+                "attacked":String(user),
+                "health": users[user].health
+            });
+                }
+             
         }
+
 
     }
 

@@ -18,32 +18,51 @@ function client(appIDs, chatField, username) {
         for (var i = 0; i < mapObject.map.length; i++) {
             for (var l = 0; l < mapObject.map[i].length; l++) {
                     ctx.fillStyle = mapObject.map[i][l].color;
-                    ctx.fillRect(i * 10, l * 10, 10, 10);
+                    ctx.fillRect(i * 25, l * 25, 25, 25);
                   }
         }
 
+    }
+   /*
+    renderPlayers() -- populates the canvas with floor and wall tiles
+    @param{object} data from map event messages
+    */
+    function renderPlayers(mapObject) {
+        var ctx = c.getContext("2d");
+        for (player in mapState["onlineUsers"]) {
+                   var ctx = c.getContext("2d");
+                   // var img = document.getElementById(msg.direction);
+                  //  ctx.drawImage(img,25*msg.x,25*msg.y);
+                    ctx.fillStyle = mapState[ "onlineUsers"][player].color;
+                    ctx.fillRect(mapState[ "onlineUsers"][player].x * 25, mapState[ "onlineUsers"][player].y * 25, 25, 25);
+        }
     }
     //get map updates
     socket.on('map event', function(msg) {
         //render map
         mapState = msg; //cache locally map state
         renderMap(msg);
+        renderPlayers(msg);
     });
     //get player updates
     socket.on('player movement', function(msg) {
-      mapState[String(msg.username)] = msg;
+      mapState["onlineUsers"][String(msg.username)] = msg;
       console.log('player movement',msg);
       if (mapState.hasOwnProperty('map')) {
               renderMap(mapState);
+              renderPlayers(mapState);
       } 
-                    var ctx = c.getContext("2d");
-                    ctx.fillStyle = msg.color;
-                    ctx.fillRect(msg.x * 10, msg.y * 10, 10, 10);
+
     });
     socket.on('died', function(msg) {
-    if(msg.player === username) 
-          alert("You died! Please re-register to be reborn! Thank you!")
+    if(msg['username'] === username) 
+          document.write("You died! Please re-register to be reborn! Thank you!")
 
+    });
+    socket.on('player attacked', function(msg) {
+      console.log(msg)
+    if(msg.attacked === username) 
+          $( "#health" ).text(msg.health);
     });
     //get player updates
     socket.on('map event', function(msg) {
@@ -105,6 +124,7 @@ function client(appIDs, chatField, username) {
                 });
                 break;
             case 32:
+            console.log('attack!');
                 socket.emit('attack', {
                     "username": String(username)
                 });
