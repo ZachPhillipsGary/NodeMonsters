@@ -37,10 +37,10 @@ function client(appIDs, chatField, username) {
               renderMap(mapState);
       } 
                     var ctx = c.getContext("2d");
-                    var img = document.getElementById(msg.direction);
-                    ctx.drawImage(img,25*msg.x,25*msg.y);
-                  //  ctx.fillStyle = msg.color;
-                  //  ctx.fillRect(msg.x * 25, msg.y * 25, 25, 25);
+                   // var img = document.getElementById(msg.direction);
+                  //  ctx.drawImage(img,25*msg.x,25*msg.y);
+                    ctx.fillStyle = msg.color;
+                    ctx.fillRect(msg.x * 25, msg.y * 25, 25, 25);
     });
     socket.on('died', function(msg) {
     if(msg.player === username) 
