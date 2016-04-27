@@ -146,12 +146,6 @@ function User(username, health, damage, uID) {
     this.x = Math.floor(Math.random() * 49) + 1;
     this.y = Math.floor(Math.random() * 49) + 1;
     //place user on map
-    io.emit('player movement', {
-                "username":this.username,
-                "x":  this.x,
-                "y":  this.y,
-                "color": this.color
-            });
 }
 //define app paths
 app.get('/', function(req, res) {
@@ -179,7 +173,6 @@ app.post('/game', function(req, res) {
                 health: String(playerData.health),
                 damage: String(playerData.damage)
             });
-
         };
         authenticate(res, req.body.email, req.body.password, displayGame);
     }
@@ -226,9 +219,12 @@ io.on('connection', function(socket) {
                 switch (msg.type) {
                     case "move":
                         movePlayer(String(msg.username), msg.direction);
-                        socket.emit('map event', {
-                            "map": worldMap.printMap()
-                        }); //update canvas
+                          io.emit('player movement', {
+                "username":users[String(msg.username)].username,
+                "x":  users[String(msg.username)].x,
+                "y":  users[String(msg.username)].y,
+                "color": users[String(msg.username)].color
+                                });
                         break;
                     default:
                         socket.emit('map event', {
