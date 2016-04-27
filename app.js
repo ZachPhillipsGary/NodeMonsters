@@ -111,6 +111,9 @@ function movePlayer(player, direction) {
                         }
                     break;
             }
+                            console.log(users[player]);
+
+                            console.log(moved);
             if (moved) {
             //send out sucessful move notifcation
             io.emit('player movement', {
