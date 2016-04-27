@@ -36,6 +36,7 @@ function client(appIDs, chatField, username) {
       if (mapState.hasOwnProperty('map')) {
               renderMap(mapState);
       } 
+                    var ctx = c.getContext("2d");
                     ctx.fillStyle = msg.color;
                     ctx.fillRect(msg.x * 10, msg.y * 10, 10, 10);
     });
