@@ -296,11 +296,20 @@ function attack(shooterUsername){
     for(var user in users){
         if (users[user].x == targetX && users[user].y == targetY){
                 users[user].health -= users[shooterUsername].damage; 
-                io.emit('player attacked', {
+                if(users[user].health < 0) {
+ io.emit('died', {
                 "username":String(user),
                 "attacked":String(user),
                 "health": users[user].health
             });
+                } else {
+            io.emit('player attacked', {
+                "username":String(shooterUsername),
+                "attacked":String(user),
+                "health": users[user].health
+            });
+                }
+             
         }
 
 
