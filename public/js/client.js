@@ -25,23 +25,16 @@ function client(appIDs, chatField, username) {
     }
     //get map updates
     socket.on('map event', function(msg) {
-        console.log(msg)
         //render map
         mapState = msg; //cache locally map state
         renderMap(msg);
-        if (msg.hasOwnProperty('onlineUsers')) {
-          for (var p in msg.onlineUsers) {
-                    var ctx = c.getContext("2d");
-                    console.log(msg.onlineUsers[p]);
-                    ctx.fillStyle = msg.onlineUsers[p].color;
-                    ctx.fillRect(msg.onlineUsers[p].x * 10, msg.onlineUsers[p].y * 10, 10, 10);
-          }
-        }
     });
     //get player updates
     socket.on('player movement', function(msg) {
-      console.log(msg)
-        renderMap(mapState);
+      console.log('player movement',msg);
+      if (mapState.hasOwnProperty('map')) {
+              renderMap(mapState);
+      }
         var ctx = c.getContext("2d");
         //render map
        if (msg.hasOwnProperty('username')) {
