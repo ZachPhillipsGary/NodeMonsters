@@ -117,6 +117,7 @@ function movePlayer(player, direction) {
             if (moved) {
             //send out sucessful move notifcation
             io.emit('player movement', {
+                "direction":String(direction),
                 "username":String(player),
                 "x":  users[player].x,
                 "y":  users[player].y,

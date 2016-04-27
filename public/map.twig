@@ -4,7 +4,20 @@
 <script src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+<style type="text/css">
+  #left {
+    display: none;
+  }
+  #right {
+    display: none;
+  }
+  #up {
+    display: none;
+  }
+  #down {
+    display: none;
+  }
+</style>
   </head>
   <body>
   <div class="container-fluid">
@@ -13,7 +26,7 @@
 </div>
     <div class="row row-centered">
       <div class="col-lg-8">
-        <canvas id="Canvas" width="500" height="500" >
+        <canvas id="Canvas" width="1000" height="1000" >
         Your browser does not support the HTML5 canvas tag.
         </canvas>
       </div>
@@ -24,9 +37,14 @@
 
   </div>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/client.js"></script>
+    <script src="/js/client.js"></script>
 <script>
 var init = new client("Canvas","Chat","{{ username }}");
   </script>
+  <img id="left" src="left.png" width="25" height="25">
+<img id="right" src="right.png" width="25" height="25">
+<img id="up" src="up.png" width="25" height="25">
+<img id="down" src="down.png" width="25" height="25">
+
 </body>
 </html>
