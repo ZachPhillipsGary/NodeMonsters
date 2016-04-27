@@ -47,6 +47,11 @@ function client(appIDs, chatField, username) {
           alert("You died! Please re-register to be reborn! Thank you!")
 
     });
+    socket.on('player attacked', function(msg) {
+      console.log(msg)
+    if(msg.attacked === username) 
+          $( "#health" ).text(msg.health);
+    });
     //get player updates
     socket.on('map event', function(msg) {
         //render map
