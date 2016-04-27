@@ -297,7 +297,7 @@ function attack(shooterUsername){
         if (users[user].x == targetX && users[user].y == targetY){
                 users[user].health -= users[shooterUsername].damage; 
                 if(users[user].health < 0) {
- io.emit('died', {
+                io.emit('died', {
                 "username":String(user),
                 "attacked":String(user),
                 "health": users[user].health
