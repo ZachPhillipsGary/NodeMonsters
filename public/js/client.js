@@ -18,7 +18,7 @@ function client(appIDs, chatField, username) {
         for (var i = 0; i < mapObject.map.length; i++) {
             for (var l = 0; l < mapObject.map[i].length; l++) {
                     ctx.fillStyle = mapObject.map[i][l].color;
-                    ctx.fillRect(i * 10, l * 10, 10, 10);
+                    ctx.fillRect(i * 25, l * 25, 25, 25);
                   }
         }
 
@@ -38,7 +38,7 @@ function client(appIDs, chatField, username) {
       } 
                     var ctx = c.getContext("2d");
                     ctx.fillStyle = msg.color;
-                    ctx.fillRect(msg.x * 10, msg.y * 10, 10, 10);
+                    ctx.fillRect(msg.x * 25, msg.y * 25, 25, 25);
     });
     socket.on('died', function(msg) {
     if(msg.player === username) 
@@ -105,6 +105,7 @@ function client(appIDs, chatField, username) {
                 });
                 break;
             case 32:
+            console.log('attack!');
                 socket.emit('attack', {
                     "username": String(username)
                 });
