@@ -302,6 +302,7 @@ function attack(shooterUsername){
                 "health": users[user].health
             });
                 } else {
+            users[user].online = false; //kick player
             io.emit('player attacked', {
                 "username":String(shooterUsername),
                 "attacked":String(user),
