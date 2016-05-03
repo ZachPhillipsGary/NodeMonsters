@@ -97,7 +97,7 @@ function createUser(res,email,password,onSuccess) {
     //we can create the user
     if (alreadyExists === false) {
         lastID++;
-        var sql = 'INSERT INTO authentication (email,password,uniqueID) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + ',' + lastID ')' ;
+        var sql = 'INSERT INTO authentication (email,password,uniqueID) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + ',' + lastID + ')' ;
 connection.query(sql, function(err, results) {
     if (err) { console.log (err) }
     console.log(results)
