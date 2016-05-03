@@ -37,7 +37,9 @@ function client(appIDs, chatField, username) {
         var ctx = c.getContext("2d");
         for (player in mapState["onlineUsers"]) {
                    var ctx = c.getContext("2d");
+                   console.log(String(mapState["onlineUsers"][player].direction))
                 var img = document.getElementById(String(mapState["onlineUsers"][player].direction));
+                console.log(img)
                     ctx.drawImage(img,mapState[ "onlineUsers"][player].x * 25, mapState[ "onlineUsers"][player].y * 25);
                     //ctx.fillStyle = mapState[ "onlineUsers"][player].color;
                     //ctx.fillRect(mapState[ "onlineUsers"][player].x * 25, mapState[ "onlineUsers"][player].y * 25, 25, 25);
