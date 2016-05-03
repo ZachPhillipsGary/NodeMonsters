@@ -185,7 +185,7 @@ app.get('/', function(req, res) {
 });
 //define signup endpoint
 //define app paths
-app.get('/signup', function(req, res) {
+app.post('/signup', function(req, res) {
       if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
         var sucessful = function(res) {
 
