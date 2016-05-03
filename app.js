@@ -86,7 +86,7 @@ function createUser(res,email,password,onSuccess) {
                 connection.query('SELECT * FROM authentication JOIN Status ON authentication.uniqueID=Status.ID;', function(err, rows) {
                     if (err) console.log(err)
                     for (var i = 0; i < rows.length; i++) {
-                        if(username == String(rows[i].email)) {
+                        if(email == String(rows[i].email)) {
                             alreadyExists = true;
                         }
                     }
