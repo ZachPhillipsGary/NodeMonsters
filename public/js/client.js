@@ -41,6 +41,7 @@ function client(appIDs, chatField, username) {
     socket.on('map event', function(msg) {
         //render map
         mapState = msg; //cache locally map state
+        console.log(msg);
         renderMap(msg);
         renderPlayers(msg);
     });
