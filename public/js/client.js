@@ -19,7 +19,7 @@ function client(appIDs, chatField, username) {
             for (var l = 0; l < mapObject.map[i].length; l++) {
                    // ctx.fillStyle = mapObject.map[i][l].color;
                    var image = document.getElementById("grass");
-                   ctx.drawImage(image,  * 25, l * 25, 25, 25);
+                   ctx.drawImage(image,  i*25, l*25, 25, 25);
                    // ctx.fillRect(i * 25, l * 25, 25, 25);
                   }
         }
