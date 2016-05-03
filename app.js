@@ -82,6 +82,7 @@ authenticate --middleware for creating users
 */
 function createUser(res,email,password,onSuccess) {
     var alreadyExists =  false;
+    var lastID;
     connection.getConnection(function(err, connection) {
                 connection.query('SELECT * FROM authentication JOIN Status ON authentication.uniqueID=Status.ID;', function(err, rows) {
                     if (err) console.log(err)
@@ -89,12 +90,19 @@ function createUser(res,email,password,onSuccess) {
                         if(email == String(rows[i].email)) {
                             alreadyExists = true;
                         }
+                        lastID = rows[i].uniqueID;
                     }
                      });
             });
     //we can create the user
     if (alreadyExists === false) {
-
+        lastID++;
+        var sql = 'INSERT INTO authentication (email,password,uniqueID) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + ',' + lastID ')' ;
+connection.query(sql, function(err, results) {
+    if (err) { console.log (err) }
+    console.log(results)
+});
+onSuccess(res);
     } else {
        res.render(__dirname + '/public/frontPage/game.twig', {
         message: "Error: User already exists!"
@@ -188,7 +196,9 @@ app.get('/', function(req, res) {
 app.post('/signup', function(req, res) {
       if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
         var sucessful = function(res) {
-
+             res.render(__dirname + '/public/frontPage/game.twig', {
+        message: "User created!"
+      });
         };
         createUser(res,req.body.email,req.body.password,sucessful);
       }
