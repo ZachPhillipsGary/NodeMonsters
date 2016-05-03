@@ -37,10 +37,10 @@ function client(appIDs, chatField, username) {
         var ctx = c.getContext("2d");
         for (player in mapState["onlineUsers"]) {
                    var ctx = c.getContext("2d");
-                   // var img = document.getElementById(msg.direction);
-                  //  ctx.drawImage(img,25*msg.x,25*msg.y);
-                    ctx.fillStyle = mapState[ "onlineUsers"][player].color;
-                    ctx.fillRect(mapState[ "onlineUsers"][player].x * 25, mapState[ "onlineUsers"][player].y * 25, 25, 25);
+                var img = document.getElementById(String(mapState["onlineUsers"][player].direction));
+                    ctx.drawImage(img,mapState[ "onlineUsers"][player].x * 25, mapState[ "onlineUsers"][player].y * 25,);
+                    //ctx.fillStyle = mapState[ "onlineUsers"][player].color;
+                    //ctx.fillRect(mapState[ "onlineUsers"][player].x * 25, mapState[ "onlineUsers"][player].y * 25, 25, 25);
         }
     }
     //get map updates
