@@ -17,10 +17,13 @@ function client(appIDs, chatField, username) {
         ctx.clearRect(0, 0, c.width, c.height); //clear map
         for (var i = 0; i < mapObject.map.length; i++) {
             for (var l = 0; l < mapObject.map[i].length; l++) {
-                   // ctx.fillStyle = mapObject.map[i][l].color;
-                   var image = document.getElementById("grass");
+                if( mapObject.map[i][l].color === "#FFFFFF") {
+                    var image = document.getElementById("grass");
                    ctx.drawImage(image,  i*25, l*25, 25, 25);
-                   // ctx.fillRect(i * 25, l * 25, 25, 25);
+                } else {
+                    ctx.fillStyle = mapObject.map[i][l].color;
+                   ctx.fillRect(i * 25, l * 25, 25, 25);
+                }
                   }
         }
 
@@ -30,6 +33,7 @@ function client(appIDs, chatField, username) {
     @param{object} data from map event messages
     */
     function renderPlayers(mapObject) {
+
         var ctx = c.getContext("2d");
         for (player in mapState["onlineUsers"]) {
                    var ctx = c.getContext("2d");
