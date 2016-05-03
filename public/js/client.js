@@ -17,7 +17,7 @@ function client(appIDs, chatField, username) {
         ctx.clearRect(0, 0, c.width, c.height); //clear map
         for (var i = 0; i < mapObject.map.length; i++) {
             for (var l = 0; l < mapObject.map[i].length; l++) {
-                if( mapObject.map[i][l].color === "#FFFFFF") {
+                if( mapObject.map[i][l].color === "#ffffff") {
                     var image = document.getElementById("grass");
                    ctx.drawImage(image,  i*25, l*25, 25, 25);
                 } else {
