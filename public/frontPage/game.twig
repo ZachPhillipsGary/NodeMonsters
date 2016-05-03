@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+  <script type="text/javascript">
+    function saveEmail() {
+      // body...
+    }
+  </script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/frontPage/game.css">
+  </head>
+  <body>
+  {{message}}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-4" >
+      <div class="container">
+  <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#login">Login</a></li>
+    <li><a data-toggle="pill" href="#signup">Sign Up</a></li>
+
+  </ul>
+  
+  <div class="tab-content">
+    <div id="login" class="tab-pane fade in active">
+            <form  action="/game" method="post" role="form">
+          <div class="form-group">
+            <label for="email">Email address:</label>
+            <input type="email" name="email" class="form-control" id="email">
+          </div>
+          <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" name="password" class="form-control" id="password">
+          </div>
+          <div class="checkbox">
+            <label><input onclick="saveEmail()" type="checkbox"> Remember me</label>
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+    <div id="signup" class="tab-pane fade">
+              <form  action="/signup" method="post" role="form">
+          <div class="form-group">
+            <label for="email">Email address:</label>
+            <input type="email" name="email" class="form-control" id="email">
+          </div>
+          <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" name="password" class="form-control" id="password">
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox"> Remember me</label>
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+      </div>
+      </div>
+  </div>
+
+        <!-- Rock Monster -->
+      <div class = "rockM">
+        <img src="/frontPage/monster1.png" alt="Monstyr" height="50" width="69">
+      </div>
+      <!-- End of Rock Monster -->
+
+      <!-- Dragon Monster -->
+      <div class = "dragM">
+        <img src="/frontPage/dragon.gif" alt="Monstyr" height="110" width="150">
+      </div>
+
+      <!-- End of Dragon Monster -->
+
+<audio controls autoplay loop>
+  <source src="/frontPage/Quan.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+
+
+</body>
+</html>

@@ -72,6 +72,33 @@ function authenticate(res, username, password, accepted) {
         });
     });
 }
+/*
+authenticate --middleware for creating users
+@param{object} res --expressjs responce object
+@param{string} username 
+@param{string} password
+@param{function} onSuccess --callback for successful user creation
+@param{function} onFailure --callback for failure
+*/
+function createUser(res,email,password,onSuccess) {
+    var alreadyExists =  false;
+    connection.getConnection(function(err, connection) {
+                connection.query('SELECT * FROM authentication JOIN Status ON authentication.uniqueID=Status.ID;', function(err, rows) {
+                    if (err) console.log(err)
+                    for (var i = 0; i < rows.length; i++) {
+                        if(username == String(rows[i].email)) {
+                            alreadyExists = true;
+                        }
+                    }
+                     });
+            });
+    //we can create the user
+    if (alreadyExists === false) {
+
+    } else {
+        console.log('duplicate user')
+    }
+}
 //include express middleware for GET & POST request parsing so we can access that data as a JS object 
 // parse application/x-www-form-urlencoded 
 app.use(bodyParser.urlencoded({
@@ -150,11 +177,25 @@ function User(username, health, damage, uID) {
 }
 //define app paths
 app.get('/', function(req, res) {
-    res.sendfile(__dirname + '/public/frontPage/game.html');
+      res.render(__dirname + '/public/frontPage/game.twig', {
+        message: ""
+      });
+});
+//define signup endpoint
+//define app paths
+app.get('/signup', function(req, res) {
+      if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')) {
+        var sucessful = function(res) {
+
+        };
+        createUser(res,req.body.email,req.body.password,sucessful);
+      }
 });
 //serve login page if user tries to access game view without logging in
 app.get('/game', function(req, res) {
-    res.sendfile(__dirname + '/public/frontPage/game.html');
+      res.render(__dirname + '/public/frontPage/game.twig', {
+        message: ""
+      });
 });
 app.post('/game', function(req, res) {
     console.log(req.body);
