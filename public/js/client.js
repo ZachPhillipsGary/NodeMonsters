@@ -17,8 +17,10 @@ function client(appIDs, chatField, username) {
         ctx.clearRect(0, 0, c.width, c.height); //clear map
         for (var i = 0; i < mapObject.map.length; i++) {
             for (var l = 0; l < mapObject.map[i].length; l++) {
-                    ctx.fillStyle = mapObject.map[i][l].color;
-                    ctx.fillRect(i * 25, l * 25, 25, 25);
+                   // ctx.fillStyle = mapObject.map[i][l].color;
+                   var image = document.getElementById("grass");
+                   ctx.drawImage(image,  * 25, l * 25, 25, 25);
+                   // ctx.fillRect(i * 25, l * 25, 25, 25);
                   }
         }
 
