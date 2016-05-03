@@ -125,25 +125,25 @@ function movePlayer(player, direction) {
             switch (direction) {
                 case "up":
                 console.log('test',worldMap.getTile(users[player].x,users[player].y-1).kind )
-              if ( worldMap.getTile(users[player].x,users[player].y-1).kind === 1 ) {
+              if ( worldMap.getTile(users[player].x,users[player].y-1).kind === 0 ) {
                         users[player].direction = "up";
                         users[player].y--;
                     }
                     break;
                 case "down":
-                if ( worldMap.getTile(users[player].x,users[player].y+1).kind === 1 ) {
+                if ( worldMap.getTile(users[player].x,users[player].y+1).kind === 0 ) {
                         users[player].direction = "down";
                         users[player].y++;
                      }
                     break;
                 case "left":
-                if ( worldMap.getTile(users[player].x-1,users[player].y).kind === 1 ) {
+                if ( worldMap.getTile(users[player].x-1,users[player].y).kind === 0 ) {
                         users[player].direction = "left";
                         users[player].x--;
                       }  
                     break;
                 case "right":
-              if ( worldMap.getTile(users[player].x+1,users[player].y).kind === 1 ) {
+              if ( worldMap.getTile(users[player].x+1,users[player].y).kind === 0 ) {
                         users[player].direction = "right";
                         users[player].x++;
                      }
