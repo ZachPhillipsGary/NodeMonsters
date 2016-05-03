@@ -96,7 +96,9 @@ function createUser(res,email,password,onSuccess) {
     if (alreadyExists === false) {
 
     } else {
-        console.log('duplicate user')
+       res.render(__dirname + '/public/frontPage/game.twig', {
+        message: "Error: User already exists!"
+      });
     }
 }
 //include express middleware for GET & POST request parsing so we can access that data as a JS object 
