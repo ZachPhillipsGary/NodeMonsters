@@ -90,7 +90,7 @@ function createUser(res,email,password,onSuccess) {
                         if(email == String(rows[i].email)) {
                             alreadyExists = true;
                         }
-                        lastID = rows[i].uniqueID;
+                        console.log(rows[i])
                     }
                      });
             });
