@@ -94,6 +94,7 @@ function createUser(res,email,password,onSuccess) {
                     }
                      });
             });
+    console.log(lastID);
     //we can create the user
     if (alreadyExists === false) {
         lastID++;
