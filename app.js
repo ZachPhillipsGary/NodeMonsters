@@ -96,22 +96,22 @@ function createUser(res,email,password,onSuccess) {
                      });
             });
 
-    console.log('lastID',lastID);
     //we can create the user
     if (alreadyExists === false) {
         var health =  99;
         var damage = Math.floor((Math.random() * 100) + 40);
         var sql = 'INSERT INTO auth (email,password) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + ');';
-        var sql2 = 'NSERT INTO status (health,damage) VALUES ('+ connection.escape(health) + ',' + connection.escape(damage) +');' ; 
+        var sql2 = 'INSERT INTO status (health,damage) VALUES ('+ connection.escape(health) + ',' + connection.escape(damage) +');' ; 
 
 connection.query(sql, function(err, results) {
     if (err) { console.log (err) }
-    connection.query(sql2, function(err, results) {
-    if (err) { console.log (err) }
-    if(results) { console (results) }
-    onSuccess(res);
-    });
 });
+connection.query(sql2, function(err, results) {
+        if (err) { console.log (err) }
+        if(results) { console (results) }
+    onSuccess(res);
+});
+
     } else {
        res.render(__dirname + '/public/frontPage/game.twig', {
         message: "<div align='center' class='alert alert-success'>Error: User already exists!</div>"
