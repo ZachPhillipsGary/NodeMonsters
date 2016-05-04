@@ -83,32 +83,31 @@ function createUser(res,email,password,onSuccess) {
     var alreadyExists =  false;
     var lastID = 0;
     connection.getConnection(function(err, connection) {
-                connection.query('SELECT * FROM authentication JOIN Status ON authentication.uniqueID=Status.ID;', function(err, rows) {
+                connection.query('SELECT * FROM auth JOIN Status ON auth.uniqueID=status.ID;', function(err, rows) {
                     if (err) console.log(err)
                     for (var i = 0; i < rows.length; i++) {
                         if(email == String(rows[i].email)) {
                             alreadyExists = true;
                         }
-                        console.log(rows[i].uniqueID)
+                        console.log('uniqueID',rows[i].uniqueID)
                         lastID++;  
                     }
                      });
             });
 
-    console.log(lastID);
+    console.log('lastID',lastID);
     //we can create the user
     if (alreadyExists === false) {
-        lastID++;
-        var sql = 'INSERT INTO authentication (email,password,uniqueID) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + ',' + lastID + ')' ;
+        var sql = 'INSERT INTO auth (email,password,uniqueID) VALUES (' + connection.escape(email) + ',' + connection.escape(password) ')' ;
         console.log(sql); 
 connection.query(sql, function(err, results) {
     if (err) { console.log (err) }
     console.log(results)
+    onSuccess(res);
 });
-onSuccess(res);
     } else {
        res.render(__dirname + '/public/frontPage/game.twig', {
-        message: "Error: User already exists!"
+        message: "<div align='center' class='alert alert-success'>Error: User already exists!</div>"
       });
     }
 }
