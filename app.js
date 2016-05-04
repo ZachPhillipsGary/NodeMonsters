@@ -102,13 +102,14 @@ function createUser(res,email,password,onSuccess) {
         var damage = Math.floor((Math.random() * 100) + 40);
         var sql = 'INSERT INTO auth (email,password) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + ');';
         var sql2 = 'INSERT INTO status (health,damage) VALUES ('+ connection.escape(health) + ',' + connection.escape(damage) +');' ; 
-
+//add row to login table    
 connection.query(sql, function(err, results) {
     if (err) { console.log (err) }
 });
+//add row to user info table
 connection.query(sql2, function(err, results) {
         if (err) { console.log (err) }
-        if(results) { console (results) }
+        if(results) { console.log (results) }
     onSuccess(res);
 });
 
