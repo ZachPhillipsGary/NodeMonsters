@@ -99,7 +99,7 @@ function createUser(res,email,password,onSuccess) {
     //we can create the user
     if (alreadyExists === false) {
         var health =  99;
-        var damage = Math.floor((Math.random() * 100) + 40);
+        var damage = Math.floor((Math.random() * 10) + 40);
         var sql = 'INSERT INTO auth (email,password) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + ');';
         var sql2 = 'INSERT INTO status (health,damage) VALUES ('+ connection.escape(health) + ',' + connection.escape(damage) +');' ; 
 //add row to login table    
@@ -191,8 +191,8 @@ function User(username, health, damage, uID) {
     this.online = true;
     this.health = health || 0;
     this.damage = damage || 0;  //Quy added damage property 
-    this.x = Math.floor(Math.random() * 24) + 1;
-    this.y = Math.floor(Math.random() * 24) + 1;
+    this.x = Math.floor(Math.random() * 23) + 1;
+    this.y = Math.floor(Math.random() * 23) + 1;
     //place user on map
 }
 //define app paths
@@ -361,12 +361,12 @@ function attack(shooterUsername){
         if (users[user].x == targetX && users[user].y == targetY){
                 users[user].health -= users[shooterUsername].damage; 
                 if(users[user].health < 0) {
+                users[user].online = false; //kick player
                 io.emit('died', {
                 "username":String(user),
                 "health": users[user].health
             });
                 } else {
-            users[user].online = false; //kick player
             io.emit('player attacked', {
                 "username":String(shooterUsername),
                 "attacked":String(user),
