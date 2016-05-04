@@ -51,8 +51,9 @@ function authenticate(res, username, password, accepted) {
         connection.query('SELECT * FROM auth JOIN status ON auth.uniqueID=status.id;', function(err, rows) {
             if (err) console.log(err)
                 //Iterate through rows to find match (safer way than dynamically creating query string)
+            console.log(rows[i]);
             for (var i = 0; i < rows.length; i++) {
-                if ((username == String(rows[i].email)) && (password == String(rows[i].password))) {
+                if ((username === String(rows[i].email)) && (password === String(rows[i].password))) {
                     console.log('match')
                     //username is in database and password matches
                     authenticated = true;
