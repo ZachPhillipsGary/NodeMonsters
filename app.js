@@ -48,7 +48,7 @@ function authenticate(res, username, password, accepted) {
         if (err) console.log(err)
         console.log('connected!');
         // perform query (or if busy place on query que)
-        connection.query('SELECT * FROM auth JOIN Status ON auth.uniqueID=status.id;', function(err, rows) {
+        connection.query('SELECT * FROM auth JOIN status ON auth.uniqueID=status.id;', function(err, rows) {
             if (err) console.log(err)
                 //Iterate through rows to find match (safer way than dynamically creating query string)
             for (var i = 0; i < rows.length; i++) {
