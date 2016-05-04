@@ -67,8 +67,12 @@ function client(appIDs, chatField, username) {
 
     });
     socket.on('died', function(msg) {
-    if(msg['username'] === username) 
-          document.write("You died! Please re-register to be reborn! Thank you!")
+    if(msg['username'] === username) {
+        alert("You died!");
+        window.location("/");
+    }
+
+         // document.write("You died! Please re-register to be reborn! Thank you!")
 
     });
     socket.on('player attacked', function(msg) {
