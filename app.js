@@ -100,7 +100,7 @@ function createUser(res,email,password,onSuccess) {
     if (alreadyExists === false) {
         var health =  99;
         var damage = Math.floor((Math.random() * 100) + 40);
-        var sql = 'INSERT INTO auth (email,password) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + '); INSERT INTO status (health,damage) VALUES ('+health+','+damage+') ' ;
+        var sql = 'INSERT INTO auth (email,password) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + '); INSERT INTO status (health,damage) VALUES ('+ connection.escape(health) + ',' + connection.escape(damage) +');' ;
 
 connection.query(sql, function(err, results) {
     if (err) { console.log (err) }
