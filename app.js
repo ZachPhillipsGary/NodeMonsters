@@ -280,7 +280,8 @@ io.on('connection', function(socket) {
                 "username":users[String(msg.username)].username,
                 "x":  users[String(msg.username)].x,
                 "y":  users[String(msg.username)].y,
-                "color": users[String(msg.username)].color
+                "color": users[String(msg.username)].color,
+                "direction": users[String(msg.username)].direction
                                 });
                         break;
                     default:
