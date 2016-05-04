@@ -40,6 +40,9 @@ function client(appIDs, chatField, username) {
                    console.log(String(mapState["onlineUsers"][player].direction))
                    var xCord = mapState[ "onlineUsers"][player].x * 25;
                    var yCord = mapState[ "onlineUsers"][player].y * 25;
+                   ctx.fillStyle = mapState[ "onlineUsers"][player].color;
+                   context.font = "bold 3px Arial";
+                    context.fillText(player, xCord, yCord);
                    var image = document.getElementById(String(mapState["onlineUsers"][player].direction));
                    ctx.drawImage(image, xCord, yCord, 25, 25);
 
