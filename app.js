@@ -81,7 +81,7 @@ authenticate --middleware for creating users
 */
 function createUser(res,email,password,onSuccess) {
     var alreadyExists =  false;
-    var lastID;
+    var lastID = 0;
     connection.getConnection(function(err, connection) {
                 connection.query('SELECT * FROM authentication JOIN Status ON authentication.uniqueID=Status.ID;', function(err, rows) {
                     if (err) console.log(err)
@@ -90,9 +90,11 @@ function createUser(res,email,password,onSuccess) {
                             alreadyExists = true;
                         }
                         console.log(rows[i].uniqueID)
+                        lastID++;  
                     }
                      });
             });
+
     console.log(lastID);
     //we can create the user
     if (alreadyExists === false) {
