@@ -110,8 +110,8 @@ connection.query(sql, function(err, results) {
 connection.query(sql2, function(err, results) {
         if (err) { console.log (err) }
         if(results) { console.log (results) }
-    onSuccess(res);
 });
+    onSuccess(res);
 
     } else {
        res.render(__dirname + '/public/frontPage/game.twig', {
