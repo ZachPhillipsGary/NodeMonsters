@@ -69,7 +69,7 @@ function client(appIDs, chatField, username) {
     socket.on('died', function(msg) {
     if(msg['username'] === username) {
         alert("You died!");
-        window.location("http://zphillips-gary17.wooster.edu:3000");
+        window.location.assign("http://zphillips-gary17.wooster.edu:3000");
     } else {
        delete mapState["onlineUsers"][msg['username']];
     }
