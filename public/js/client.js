@@ -19,10 +19,10 @@ function client(appIDs, chatField, username) {
             for (var l = 0; l < mapObject.map[i].length; l++) {
                 if( mapObject.map[i][l].color === "#ffffff") {
                     var image = document.getElementById("grass");
-                   ctx.drawImage(image,  i*25, l*25, 25, 25);
+                    ctx.drawImage(image, i * 25, l * 25, 25, 25);
                 } else {
                     ctx.fillStyle = mapObject.map[i][l].color;
-                   ctx.fillRect(i * 25, l * 25, 25, 25);
+                    ctx.fillRect(i * 25, l * 25, 25, 25);
                 }
                   }
         }
@@ -38,8 +38,10 @@ function client(appIDs, chatField, username) {
         for (player in mapState["onlineUsers"]) {
                    var ctx = c.getContext("2d");
                    console.log(String(mapState["onlineUsers"][player].direction))
+                   var xCord = mapState[ "onlineUsers"][player].x * 25;
+                   var yCord = mapState[ "onlineUsers"][player].y * 25;
                   var image = document.getElementById("up");
-                   ctx.drawImage(image,  i*25, l*25, 25, 25);
+                   ctx.drawImage(image, xCord, yCord, 25, 25);
                 console.log(img)
                 ctx.drawImage(img, mapState[ "onlineUsers"][player].x * 25, mapState[ "onlineUsers"][player].y * 25, 25, 25);
 
