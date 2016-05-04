@@ -48,7 +48,7 @@ function authenticate(res, username, password, accepted) {
         if (err) console.log(err)
         console.log('connected!');
         // perform query (or if busy place on query que)
-        connection.query('SELECT * FROM authentication JOIN Status ON authentication.uniqueID=Status.ID;', function(err, rows) {
+        connection.query('SELECT * FROM auth JOIN Status ON auth.uniqueID=status.ID;', function(err, rows) {
             if (err) console.log(err)
                 //Iterate through rows to find match (safer way than dynamically creating query string)
             for (var i = 0; i < rows.length; i++) {
@@ -98,8 +98,10 @@ function createUser(res,email,password,onSuccess) {
     console.log('lastID',lastID);
     //we can create the user
     if (alreadyExists === false) {
-        var sql = 'INSERT INTO auth (email,password) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + ')' ;
-        console.log(sql); 
+        var health =  99;
+        var damage = Math.floor((Math.random() * 100) + 40);
+        var sql = 'INSERT INTO auth (email,password) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + '); INSERT INTO status (health,damage) VALUES ('+health+','+damage+') ' ;
+
 connection.query(sql, function(err, results) {
     if (err) { console.log (err) }
     console.log(results)
