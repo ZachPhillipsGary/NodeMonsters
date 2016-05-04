@@ -43,7 +43,7 @@ authenticate --authentication middleware
 */
 function authenticate(res, username, password, accepted) {
     var authenticated = false;
-    console.log(username, password);
+    console.log('username+password',username, password);
     connection.getConnection(function(err, connection) {
         if (err) console.log(err)
         console.log('connected!');
@@ -107,6 +107,8 @@ function createUser(res,email,password,onSuccess) {
 connection.query(sql, function(err, results) {
     if (err) { console.log (err) }
     connection.query(sql2, function(err, results) {
+    if (err) { console.log (err) }
+    if(results) { console (results) }
     onSuccess(res);
     });
 });
