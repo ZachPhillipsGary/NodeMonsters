@@ -101,12 +101,14 @@ function createUser(res,email,password,onSuccess) {
     if (alreadyExists === false) {
         var health =  99;
         var damage = Math.floor((Math.random() * 100) + 40);
-        var sql = 'INSERT INTO auth (email,password) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + '); INSERT INTO status (health,damage) VALUES ('+ connection.escape(health) + ',' + connection.escape(damage) +');' ;
+        var sql = 'INSERT INTO auth (email,password) VALUES (' + connection.escape(email) + ',' + connection.escape(password) + ');';
+        var sql2 = 'NSERT INTO status (health,damage) VALUES ('+ connection.escape(health) + ',' + connection.escape(damage) +');' ; 
 
 connection.query(sql, function(err, results) {
     if (err) { console.log (err) }
-    console.log(results)
+    connection.query(sql2, function(err, results) {
     onSuccess(res);
+    });
 });
     } else {
        res.render(__dirname + '/public/frontPage/game.twig', {
