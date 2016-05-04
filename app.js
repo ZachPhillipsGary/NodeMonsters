@@ -169,7 +169,7 @@ function movePlayer(player, direction) {
 }
 //user class
 function User(username, health, damage, uID) {
-    this.direction = ""; //
+    this.direction = "up"; // store direction
     function getRandomColor() {
      var letters = '0123456789ABCDEF'.split('');
      var color = '#';
