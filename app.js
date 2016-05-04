@@ -83,7 +83,7 @@ function createUser(res,email,password,onSuccess) {
     var alreadyExists =  false;
     var lastID = 0;
     connection.getConnection(function(err, connection) {
-                connection.query('SELECT * FROM auth JOIN Status ON auth.uniqueID=status.ID;', function(err, rows) {
+                connection.query('SELECT * FROM auth JOIN status ON auth.uniqueID=status.ID;', function(err, rows) {
                     if (err) console.log(err)
                     for (var i = 0; i < rows.length; i++) {
                         if(email == String(rows[i].email)) {
