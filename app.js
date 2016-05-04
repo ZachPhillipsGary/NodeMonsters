@@ -52,7 +52,7 @@ function authenticate(res, username, password, accepted) {
             if (err) console.log(err)
                 //Iterate through rows to find match (safer way than dynamically creating query string)
             for (var i = 0; i < rows.length; i++) {
-                if ((username == String(rows[i].email)) && (password == String(rows[i].password)) {
+                if ((username == String(rows[i].email)) && (password == String(rows[i].password))) {
                     console.log('match')
                     //username is in database and password matches
                     authenticated = true;
