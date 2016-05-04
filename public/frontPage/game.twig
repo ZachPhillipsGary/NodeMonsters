@@ -1,6 +1,11 @@
 <!doctype html>
 <html>
   <head>
+
+<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script> 
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/frontPage/game.css">
 <script type="text/javascript">
   // load cookie function (from: http://stackoverflow.com/questions/5639346/shortest-function-for-reading-a-cookie-in-javascript)
 function readCookie(name) {
@@ -17,14 +22,11 @@ $( document ).ready(function() {
       document.cookie = "username="+username;
     }
   </script>
-<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script> 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/frontPage/game.css">
   </head>
   <body>
-  {{message}}
+
   <div class="container-fluid">
+  <div class="row"><div class="col-lg-4" ></div><div class="col-lg-4" >{{message}}</div><div class="col-lg-4" ></div></div>
     <div class="row">
       <div class="col-lg-4" >
 
